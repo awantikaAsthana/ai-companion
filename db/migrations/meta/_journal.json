@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789069288536,
+      "tag": "0000_majestic_sally_floyd",
+      "breakpoints": true
+    }
+  ]
+}

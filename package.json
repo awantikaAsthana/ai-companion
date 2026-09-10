@@ -1,0 +1,34 @@
+{
+  "name": "ai-companion",
+  "version": "1.0.0",
+  "description": "AI companion platform built around customizable characters, conversations, persistent memory, discovery, and creator experiences.",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "tsx tests/db/connection.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awantikaAsthana/ai-companion.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/awantikaAsthana/ai-companion/issues"
+  },
+  "homepage": "https://github.com/awantikaAsthana/ai-companion#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "postgres": "^3.4.9"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
