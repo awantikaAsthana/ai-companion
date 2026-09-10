@@ -1,0 +1,14 @@
+﻿name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CI foundation ready"
