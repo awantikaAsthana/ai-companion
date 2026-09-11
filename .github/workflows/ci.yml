@@ -45,6 +45,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Run database migrations
+        run: npx drizzle-kit migrate
+
       - name: Test
         run: npm test
 

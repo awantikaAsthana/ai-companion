@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "tsx tests/db/connection.test.ts"
+    "test": "tsx tests/db/connection.test.ts && node --import tsx --test tests/auth/auth.test.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/awantikaAsthana/ai-companion#readme",
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "argon2": "^0.45.1",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "next": "^16.3.5",
@@ -34,7 +35,9 @@
     "postgres": "^3.4.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.2",
+    "zod-openapi": "^6.0.2"
   },
   "devDependencies": {
     "@types/node": "^22.20.2",
@@ -45,5 +48,8 @@
     "eslint-config-next": "^16.3.5",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "argon2@0.45.1": true
   }
 }
