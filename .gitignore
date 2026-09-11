@@ -26,3 +26,5 @@ pnpm-debug.log*
 docker-data/
 tmp/
 temp/
+
+tsconfig.tsbuildinfo
