@@ -1,11 +1,19 @@
 import {
   pgTable,
+  pgEnum,
   uuid,
   varchar,
   text,
   timestamp,
   index,
+  jsonb,
+  boolean,
 } from "drizzle-orm/pg-core";
+
+export const characterVisibilityEnum = pgEnum("character_visibility", [
+  "private",
+  "public",
+]);
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -37,18 +45,38 @@ export const sessions = pgTable(
   }),
 );
 
-export const characters = pgTable("characters", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  name: varchar("name", { length: 100 }).notNull(),
-  description: text("description"),
-  systemPrompt: text("system_prompt").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-});
+export const characters = pgTable(
+  "characters",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    creatorId: uuid("creator_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: varchar("name", { length: 100 }).notNull(),
+    description: text("description"),
+    avatarUrl: text("avatar_url"),
+    personality: text("personality"),
+    interests: jsonb("interests").$type<string[]>().default([]).notNull(),
+    communicationStyle: text("communication_style"),
+    relationshipDynamic: text("relationship_dynamic"),
+    systemPrompt: text("system_prompt").notNull(),
+    visibility: characterVisibilityEnum("visibility").default("private").notNull(),
+    isPublished: boolean("is_published").default(false).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => ({
+    creatorIdIdx: index("characters_creator_id_idx").on(table.creatorId),
+    visibilityPublishedIdx: index("characters_visibility_published_idx").on(
+      table.visibility,
+      table.isPublished,
+    ),
+  }),
+);
 
 export const conversations = pgTable(
   "conversations",

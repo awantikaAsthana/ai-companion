@@ -7,6 +7,14 @@ import {
   authResponseSchema,
   errorResponseSchema,
 } from "@/lib/auth/schemas";
+import {
+  createCharacterSchema,
+  updateCharacterSchema,
+  characterIdParamSchema,
+  characterOwnerResponseSchema,
+  characterPublicResponseSchema,
+  characterListResponseSchema,
+} from "@/lib/characters/schemas";
 
 const validationErrorSchema = z
   .object({
@@ -123,6 +131,181 @@ export const openApiDocument = createDocument({
         },
       },
     },
+    "/api/characters": {
+      post: {
+        tags: ["Characters"],
+        summary: "Create a new character",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": { schema: createCharacterSchema },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Character created successfully",
+            content: {
+              "application/json": { schema: characterOwnerResponseSchema },
+            },
+          },
+          "400": {
+            description: "Validation error or invalid JSON",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+      get: {
+        tags: ["Characters"],
+        summary: "List characters (creator's characters + public published characters)",
+        responses: {
+          "200": {
+            description: "List of accessible characters",
+            content: {
+              "application/json": { schema: characterListResponseSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+    },
+    "/api/characters/{id}": {
+      get: {
+        tags: ["Characters"],
+        summary: "Get character by ID",
+        requestParams: {
+          path: characterIdParamSchema,
+        },
+        responses: {
+          "200": {
+            description: "Character details",
+            content: {
+              "application/json": {
+                schema: z
+                  .union([characterOwnerResponseSchema, characterPublicResponseSchema])
+                  .meta({ id: "CharacterDetailsResponse" }),
+              },
+            },
+          },
+          "400": {
+            description: "Invalid character ID format",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: character is private",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Character not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ["Characters"],
+        summary: "Update character (creator only)",
+        requestParams: {
+          path: characterIdParamSchema,
+        },
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": { schema: updateCharacterSchema },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Character updated successfully",
+            content: {
+              "application/json": { schema: characterOwnerResponseSchema },
+            },
+          },
+          "400": {
+            description: "Validation error or invalid JSON",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: Not creator of character",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Character not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ["Characters"],
+        summary: "Delete character (creator only)",
+        requestParams: {
+          path: characterIdParamSchema,
+        },
+        responses: {
+          "204": {
+            description: "Character deleted successfully",
+          },
+          "400": {
+            description: "Invalid character ID format",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: Not creator of character",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Character not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+    },
   },
 });
-
