@@ -115,3 +115,4 @@ export async function DELETE(request: Request, context: RouteContext) {
 
   return new NextResponse(null, { status: 204 });
 }
+

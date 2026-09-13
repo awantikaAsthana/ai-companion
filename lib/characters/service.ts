@@ -226,3 +226,4 @@ export async function deleteCharacter(
   await db.delete(characters).where(eq(characters.id, characterId));
   return { success: true };
 }
+

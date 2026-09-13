@@ -46,3 +46,4 @@ export async function GET(request: Request) {
   const result = await listCharacters(user.id);
   return NextResponse.json(result, { status: 200 });
 }
+

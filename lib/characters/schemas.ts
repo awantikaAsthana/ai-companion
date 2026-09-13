@@ -168,3 +168,4 @@ export type CharacterOwnerResponse = z.infer<typeof characterOwnerResponseSchema
 export type CharacterPublicResponse = z.infer<typeof characterPublicResponseSchema>;
 export type CharacterResponse = CharacterOwnerResponse | CharacterPublicResponse;
 export type CharacterListResponse = z.infer<typeof characterListResponseSchema>;
+

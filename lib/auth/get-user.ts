@@ -32,3 +32,4 @@ export async function getAuthUser(request?: Request) {
   const result = await validateSession(sessionId);
   return result?.user ?? null;
 }
+
