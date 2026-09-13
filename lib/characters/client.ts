@@ -3,12 +3,22 @@ import type {
   UpdateCharacterInput,
   CharacterListResponse,
   CharacterOwnerResponse,
+  CharacterResponse,
 } from "./schemas";
 
 // ponytail: lean fetch wrapper, no axios/query libraries needed
 
 export async function getCharacters(): Promise<CharacterListResponse> {
   const res = await fetch("/api/characters");
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function getCharacterById(id: string): Promise<CharacterResponse> {
+  const res = await fetch(`/api/characters/${id}`);
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.error || `HTTP ${res.status}`);
@@ -56,3 +66,4 @@ export async function deleteCharacter(id: string): Promise<void> {
     throw new Error(data.error || `HTTP ${res.status}`);
   }
 }
+
