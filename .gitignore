@@ -28,3 +28,6 @@ tmp/
 temp/
 
 tsconfig.tsbuildinfo
+
+# TypeScript build cache
+*.tsbuildinfo

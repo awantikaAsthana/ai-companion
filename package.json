@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "tsx tests/db/connection.test.ts && node --import tsx --test tests/auth/auth.test.ts"
+    "test": "tsx tests/db/connection.test.ts && node --import tsx --test tests/auth/auth.test.ts && node --import tsx --test tests/characters/characters.test.ts"
   },
   "repository": {
     "type": "git",
