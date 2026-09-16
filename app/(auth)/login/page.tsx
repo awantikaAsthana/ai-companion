@@ -28,7 +28,8 @@ export default function LoginPage() {
 
   return (
     <AuthForm
-      title="Log in"
+      title="Welcome back"
+      subtitle="Sign in to continue your story with your companion."
       fields={[
         {
           name: "email",
@@ -45,12 +46,15 @@ export default function LoginPage() {
           autoComplete: "current-password",
         },
       ]}
-      submitLabel="Log in"
+      submitLabel="Enter Ecstasy"
       onSubmit={handleLogin}
       footer={
         <>
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-blue-400 hover:underline">
+          <Link
+            href="/signup"
+            className="text-[#C9A46A] hover:text-[#E8D0C5] transition-colors font-medium underline underline-offset-4"
+          >
             Sign up
           </Link>
         </>
@@ -58,4 +62,3 @@ export default function LoginPage() {
     />
   );
 }
-

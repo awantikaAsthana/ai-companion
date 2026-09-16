@@ -11,6 +11,21 @@ export function AmbientBackground() {
       {/* Base deep background */}
       <div className="absolute inset-0 bg-[#090405]" />
 
+      {/* Atmospheric handwritten letter & vintage damask background layer */}
+      <div
+        className="absolute inset-0 opacity-[0.22] mix-blend-screen transition-opacity duration-1000"
+        style={{
+          backgroundImage: `url('/landing/letter-bg.jpg')`,
+          backgroundSize: "680px auto",
+          backgroundPosition: "center top",
+          backgroundRepeat: "repeat",
+          maskImage:
+            "radial-gradient(ellipse 90% 80% at 50% 35%, black 25%, rgba(0,0,0,0.7) 65%, transparent 95%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 90% 80% at 50% 35%, black 25%, rgba(0,0,0,0.7) 65%, transparent 95%)",
+        }}
+      />
+
       {/* Subtle deep wine radial warmth top-center */}
       <motion.div
         animate={{

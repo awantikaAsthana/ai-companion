@@ -29,7 +29,8 @@ export default function SignupPage() {
 
   return (
     <AuthForm
-      title="Create account"
+      title="Begin your story"
+      subtitle="Create an account to meet a companion made for you."
       fields={[
         {
           name: "name",
@@ -53,12 +54,15 @@ export default function SignupPage() {
           autoComplete: "new-password",
         },
       ]}
-      submitLabel="Sign up"
+      submitLabel="Create Account"
       onSubmit={handleSignup}
       footer={
         <>
           Already have an account?{" "}
-          <Link href="/login" className="text-blue-400 hover:underline">
+          <Link
+            href="/login"
+            className="text-[#C9A46A] hover:text-[#E8D0C5] transition-colors font-medium underline underline-offset-4"
+          >
             Log in
           </Link>
         </>
@@ -66,4 +70,3 @@ export default function SignupPage() {
     />
   );
 }
-

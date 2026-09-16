@@ -11,6 +11,57 @@ export function FinalCta() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[650px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#6E0717]/40 via-[#430D15]/20 to-transparent blur-3xl" />
       <div className="pointer-events-none absolute left-1/2 top-2/3 h-[280px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C9A46A]/12 blur-2xl" />
 
+      {/* Handwritten Letter Background Texture */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.20] mix-blend-screen"
+        style={{
+          backgroundImage: `url('/landing/letter-bg.jpg')`,
+          backgroundSize: "600px auto",
+          backgroundPosition: "center",
+          backgroundRepeat: "repeat",
+          maskImage:
+            "radial-gradient(ellipse 75% 65% at 50% 50%, black 20%, rgba(0,0,0,0.5) 55%, transparent 85%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 75% 65% at 50% 50%, black 20%, rgba(0,0,0,0.5) 55%, transparent 85%)",
+        }}
+      />
+
+      {/* Rose Accent Left */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 0.85, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="pointer-events-none absolute -bottom-10 -left-6 sm:left-4 md:left-12 w-32 sm:w-44 md:w-56 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.4)]"
+      >
+        <img
+          src="/landing/rose-single-bloom.png"
+          alt=""
+          className="w-full h-auto object-contain select-none -rotate-12"
+          style={{
+            maskImage:
+              "linear-gradient(to top, transparent 0%, black 18%, black 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to top, transparent 0%, black 18%, black 100%)",
+          }}
+        />
+      </motion.div>
+
+      {/* Rose Accent Right */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 0.85, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.2 }}
+        className="pointer-events-none absolute -top-8 -right-6 sm:right-4 md:right-12 w-28 sm:w-40 md:w-52 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.4)]"
+      >
+        <img
+          src="/landing/rose-single-bloom-2.png"
+          alt=""
+          className="w-full h-auto object-contain select-none rotate-45"
+        />
+      </motion.div>
+
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
