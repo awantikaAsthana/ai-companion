@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { Sparkles, LogOut } from "lucide-react";
 
 interface User {
   id: string;
@@ -11,6 +13,7 @@ interface User {
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
@@ -23,7 +26,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       })
       .then((data: { user: User }) => setUser(data.user))
       .catch(() => router.replace("/login"));
-      // ponytail: no finally needed — redirect handles the unauthenticated case
   }, [router]);
 
   useEffect(() => {
@@ -41,33 +43,84 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="flex min-h-dvh items-center justify-center">
-        <p className="text-neutral-400 animate-pulse">Loading…</p>
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-[#090405] text-[#F5E9E5]">
+        <div className="relative flex h-12 w-12 items-center justify-center">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C9A46A]/20" />
+          <span className="font-serif text-2xl text-[#C9A46A]">✦</span>
+        </div>
+        <p className="mt-4 font-serif text-sm tracking-widest text-[#BFA8A8] uppercase">
+          Entering Ecstasy…
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-dvh">
-      <header className="flex items-center justify-between border-b border-neutral-800 px-4 py-3 sm:px-6">
-        <span className="text-sm font-medium text-neutral-200">
-          Ecstasy
-        </span>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-neutral-400">
-            {user?.name ?? user?.email}
-          </span>
+    <div className="relative min-h-dvh bg-[#090405] text-[#F5E9E5]">
+      {/* Subtle atmospheric ambient glow */}
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(110,7,23,0.15),rgba(9,4,5,0))]" />
+
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#430D15]/40 bg-[#090405]/80 px-4 py-3 sm:px-8 backdrop-blur-md">
+        <div className="flex items-center gap-6">
+          <Link
+            href="/app"
+            className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
+          >
+            <span className="text-sm text-[#C9A46A] transition-transform duration-300 group-hover:rotate-12">
+              ✦
+            </span>
+            <span className="font-serif text-lg tracking-[0.2em] uppercase font-light text-[#F5E9E5]">
+              Ecstasy
+            </span>
+          </Link>
+
+          <nav className="hidden sm:flex items-center gap-1 border-l border-[#430D15]/60 pl-6">
+            <Link
+              href="/app"
+              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+                pathname === "/app"
+                  ? "border border-[#C9A46A]/40 bg-[#21080C] text-[#F5E9E5]"
+                  : "text-[#BFA8A8] hover:text-[#F5E9E5]"
+              }`}
+            >
+              Sanctuary
+            </Link>
+            <Link
+              href="/app/characters"
+              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+                pathname.startsWith("/app/characters")
+                  ? "border border-[#C9A46A]/40 bg-[#21080C] text-[#F5E9E5]"
+                  : "text-[#BFA8A8] hover:text-[#F5E9E5]"
+              }`}
+            >
+              Companions
+            </Link>
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 rounded-full border border-[#430D15]/60 bg-[#120507]/80 px-3 py-1 text-xs text-[#BFA8A8]">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#C9A46A]" />
+            <span className="font-medium text-[#F5E9E5]">
+              {user?.name ?? user?.email?.split("@")[0]}
+            </span>
+          </div>
+
           <button
             onClick={handleLogout}
             disabled={loggingOut}
-            className="rounded-md bg-neutral-800 px-3 py-1.5 text-xs font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-1.5 rounded-full border border-[#430D15]/60 bg-[#120507]/60 px-3 py-1.5 text-xs text-[#BFA8A8] transition-all duration-200 hover:border-[#6E0717] hover:bg-[#21080C] hover:text-[#F5E9E5] disabled:cursor-not-allowed disabled:opacity-50"
+            title="Log out"
           >
-            {loggingOut ? "Logging out…" : "Log out"}
+            <LogOut className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">
+              {loggingOut ? "Leaving…" : "Log out"}
+            </span>
           </button>
         </div>
       </header>
-      <main className="p-4 sm:p-6">{children}</main>
+
+      <main className="px-4 py-6 sm:px-8 sm:py-10 max-w-7xl mx-auto">{children}</main>
     </div>
   );
 }
-
