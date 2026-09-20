@@ -28,6 +28,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ai_companion
+      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ai_companion_test
 
     steps:
       - name: Checkout
