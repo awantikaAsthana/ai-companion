@@ -317,6 +317,13 @@ export async function postMessageAndGenerateReply(
       conversationId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
+
+    // Clean up the newly inserted user message so we don't leave an orphaned message in history
+    await db
+      .delete(messages)
+      .where(eq(messages.id, userMsg.id))
+      .catch(() => {});
+
     return {
       success: false,
       status: 502,

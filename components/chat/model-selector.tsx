@@ -12,8 +12,8 @@ interface ModelSelectorProps {
 
 export function ModelSelector({
   onSelectionChange,
-  defaultProvider = "zrok",
-  defaultModel = "qwen38-27b",
+  defaultProvider = "ollama",
+  defaultModel = "qwen3-coder:480b-cloud",
 }: ModelSelectorProps) {
   const [isDev, setIsDev] = useState(false);
   const [providers, setProviders] = useState<ProviderOption[]>([]);

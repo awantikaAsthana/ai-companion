@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Sparkles, LogOut } from "lucide-react";
 
 interface User {
@@ -13,6 +13,7 @@ interface User {
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
@@ -60,17 +61,42 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(110,7,23,0.15),rgba(9,4,5,0))]" />
 
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#430D15]/40 bg-[#090405]/80 px-4 py-3 sm:px-8 backdrop-blur-md">
-        <Link
-          href="/app"
-          className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
-        >
-          <span className="text-sm text-[#C9A46A] transition-transform duration-300 group-hover:rotate-12">
-            ✦
-          </span>
-          <span className="font-serif text-lg tracking-[0.2em] uppercase font-light text-[#F5E9E5]">
-            Ecstasy
-          </span>
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link
+            href="/app"
+            className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
+          >
+            <span className="text-sm text-[#C9A46A] transition-transform duration-300 group-hover:rotate-12">
+              ✦
+            </span>
+            <span className="font-serif text-lg tracking-[0.2em] uppercase font-light text-[#F5E9E5]">
+              Ecstasy
+            </span>
+          </Link>
+
+          <nav className="hidden sm:flex items-center gap-1 border-l border-[#430D15]/60 pl-6">
+            <Link
+              href="/app"
+              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+                pathname === "/app"
+                  ? "border border-[#C9A46A]/40 bg-[#21080C] text-[#F5E9E5]"
+                  : "text-[#BFA8A8] hover:text-[#F5E9E5]"
+              }`}
+            >
+              Sanctuary
+            </Link>
+            <Link
+              href="/app/characters"
+              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+                pathname.startsWith("/app/characters")
+                  ? "border border-[#C9A46A]/40 bg-[#21080C] text-[#F5E9E5]"
+                  : "text-[#BFA8A8] hover:text-[#F5E9E5]"
+              }`}
+            >
+              Companions
+            </Link>
+          </nav>
+        </div>
 
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 rounded-full border border-[#430D15]/60 bg-[#120507]/80 px-3 py-1 text-xs text-[#BFA8A8]">

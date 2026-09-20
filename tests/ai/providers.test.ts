@@ -2,6 +2,7 @@ import { describe, it, beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
 import { ZrokProvider } from "../../lib/ai/providers/zrok.js";
 import { OpenRouterProvider } from "../../lib/ai/providers/openrouter.js";
+import { OllamaProvider } from "../../lib/ai/providers/ollama.js";
 import {
   resolveProviderAndModel,
   modelRegistry,
@@ -62,8 +63,8 @@ describe("AI Providers & Gateway", () => {
     assert.equal(capturedUrl, "https://test.shares.zrok.io/v1/chat");
     assert.equal(capturedHeaders["Authorization"], "Bearer test-zrok-key-123");
     assert.equal(capturedHeaders["Content-Type"], "application/json");
-    assert.equal(capturedBody.model, "qwen38-27b");
-    assert.equal(capturedBody.stream, false);
+    assert.deepEqual(capturedBody.messages, [{ role: "user", content: "Hello!" }]);
+    assert.equal(capturedBody.temperature, 0.7);
     assert.equal(result.content, "Greetings, I am ready.");
     assert.equal(result.provider, "zrok");
     assert.equal(result.model, "qwen38-27b");
@@ -198,6 +199,124 @@ describe("AI Providers & Gateway", () => {
       async () => provider.chat({ model: "default", messages: [] }),
       /OPENROUTER_API_KEY is not configured/,
     );
+  });
+
+  it("OpenRouterProvider aborts and throws timeout error on timeout", async () => {
+    globalThis.fetch = (async (_url: string, init?: RequestInit) => {
+      // Simulate slow response that waits until signal aborts
+      return new Promise((_resolve, reject) => {
+        init?.signal?.addEventListener("abort", () => {
+          const err = new Error("This operation was aborted");
+          err.name = "AbortError";
+          reject(err);
+        });
+      });
+    }) as any;
+
+    const provider = new OpenRouterProvider(
+      "https://openrouter.ai/api/v1",
+      "test-openrouter-key",
+      { timeoutMs: 50 },
+    );
+
+    await assert.rejects(
+      async () => provider.chat({ model: "default", messages: [] }),
+      /OpenRouter request timed out/,
+    );
+  });
+
+  it("OpenRouterProvider handles 429 rate limit cleanly", async () => {
+    globalThis.fetch = (async () => {
+      return new Response(
+        JSON.stringify({ error: { message: "Rate limit exceeded" } }),
+        { status: 429, headers: { "Content-Type": "application/json" } },
+      );
+    }) as any;
+
+    const provider = new OpenRouterProvider(
+      "https://openrouter.ai/api/v1",
+      "test-openrouter-key",
+    );
+
+    await assert.rejects(
+      async () => provider.chat({ model: "default", messages: [] }),
+      /OpenRouter rate limit reached/,
+    );
+  });
+
+  it("OpenRouterProvider does not leak upstream error body in thrown errors", async () => {
+    globalThis.fetch = (async () => {
+      return new Response(
+        JSON.stringify({ error: "SENSITIVE_UPSTREAM_TOKEN_AND_TRACEBACK" }),
+        { status: 500, headers: { "Content-Type": "application/json" } },
+      );
+    }) as any;
+
+    const provider = new OpenRouterProvider(
+      "https://openrouter.ai/api/v1",
+      "test-openrouter-key",
+    );
+
+    await assert.rejects(
+      async () => provider.chat({ model: "default", messages: [] }),
+      (err: Error) => {
+        assert.ok(!err.message.includes("SENSITIVE_UPSTREAM_TOKEN"));
+        assert.ok(err.message.includes("status 500"));
+        return true;
+      },
+    );
+  });
+
+  // Ollama provider & cloud models
+  it("OllamaProvider sends request and parses response with cloud model", async () => {
+    let capturedUrl = "";
+    let capturedBody: any = null;
+
+    globalThis.fetch = (async (url: string, init?: RequestInit) => {
+      capturedUrl = url;
+      capturedBody = JSON.parse(init?.body as string);
+
+      return new Response(
+        JSON.stringify({
+          model: "qwen3-coder:480b-cloud",
+          message: {
+            role: "assistant",
+            content: "Hello from Qwen3 Coder 480B Cloud!",
+          },
+          prompt_eval_count: 25,
+          eval_count: 14,
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    }) as any;
+
+    const provider = new OllamaProvider("http://localhost:11434");
+    const result = await provider.chat({
+      model: "qwen3-coder:480b-cloud",
+      messages: [{ role: "user", content: "Write a function." }],
+    });
+
+    assert.equal(capturedUrl, "http://localhost:11434/api/chat");
+    assert.equal(capturedBody.model, "qwen3-coder:480b-cloud");
+    assert.equal(result.content, "Hello from Qwen3 Coder 480B Cloud!");
+    assert.equal(result.provider, "ollama");
+    assert.equal(result.model, "qwen3-coder:480b-cloud");
+    assert.equal(result.tokens?.totalTokens, 39);
+  });
+
+  it("resolveProviderAndModel correctly resolves all Ollama cloud models", () => {
+    const models = [
+      "qwen3-coder:480b-cloud",
+      "gpt-oss:120b-cloud",
+      "gpt-oss:20b-cloud",
+      "deepseek-v3.1:671b-cloud",
+    ];
+
+    for (const model of models) {
+      const res = resolveProviderAndModel("ollama", model);
+      assert.equal(res.provider, "ollama");
+      assert.equal(res.model, model);
+    }
   });
 
   // Context & Prompt construction

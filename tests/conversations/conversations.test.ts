@@ -265,6 +265,49 @@ describe("Conversations & Chat API", () => {
       .where(eq(messages.conversationId, conv.id));
     assert.equal(savedMessages.length, 2);
   });
+
+  it("returns 502 and cleans up orphaned user message if AI provider fails", async () => {
+    const { user, sessionId } = await createTestUser("ai-failure-user@example.com");
+    const char = await createTestCharacter(user.id, "public", true);
+
+    const createReq = makeRequest(
+      "http://localhost:3000/api/conversations",
+      "POST",
+      sessionId,
+      { characterId: char.id },
+    );
+    const createRes = await ConversationsRoute.POST(createReq);
+    const conv = await createRes.json();
+
+    // Mock fetch to simulate AI provider failure
+    globalThis.fetch = (async () => {
+      return new Response("Upstream Server Error", { status: 500 });
+    }) as any;
+
+    const msgReq = makeRequest(
+      `http://localhost:3000/api/conversations/${conv.id}/messages`,
+      "POST",
+      sessionId,
+      { content: "This should not be orphaned" },
+    );
+    const msgRes = await MessagesRoute.POST(msgReq, {
+      params: Promise.resolve({ id: conv.id }),
+    });
+
+    assert.equal(msgRes.status, 502);
+    const errData = await msgRes.json();
+    assert.equal(
+      errData.error,
+      "AI provider failed to generate a reply. Please try again later.",
+    );
+
+    // Verify NO orphaned message was left in DB
+    const savedMessages = await db
+      .select()
+      .from(messages)
+      .where(eq(messages.conversationId, conv.id));
+    assert.equal(savedMessages.length, 0);
+  });
 });
 
 // Force exit after tests since postgres connection pool keeps the process alive

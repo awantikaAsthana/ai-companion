@@ -301,6 +301,36 @@ Never manually modify production database structure.
 
 ---
 
+## Database Safety — CRITICAL
+
+NEVER run:
+- docker compose down -v
+- docker volume rm postgres_data
+- docker system prune --volumes
+- DROP DATABASE
+- DROP SCHEMA
+- TRUNCATE production/development tables
+- drizzle-kit push --force against the development database
+
+The PostgreSQL Docker volume `postgres_data` contains persistent development data.
+
+Safe restart:
+    docker compose down
+    docker compose up -d
+
+OR:
+    docker compose restart
+
+Database migrations must use:
+    npx drizzle-kit generate
+    npx drizzle-kit migrate
+
+Never destroy or recreate the database to solve a migration problem without explicit human approval.
+
+Tests must use an isolated test database and must never destroy the developer's database.
+
+
+
 ## 11. AI Architecture
 
 AI calls must go through the centralized AI layer.
@@ -592,6 +622,7 @@ Do not attempt to build an entire milestone in one uncontrolled generation.
 Prefer small vertical slices.
 
 ---
+
 
 ## 21. Agent Memory
 

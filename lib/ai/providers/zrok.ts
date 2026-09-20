@@ -1,12 +1,21 @@
 import type { AIProvider, ChatRequest, ChatResponse } from "../types";
 
+export interface ZrokProviderOptions {
+  timeoutMs?: number;
+}
+
 export class ZrokProvider implements AIProvider {
   readonly name = "zrok" as const;
+  private readonly timeoutMs: number;
 
   constructor(
     private readonly baseUrl: string,
     private readonly apiKey: string,
-  ) {}
+    options?: ZrokProviderOptions,
+  ) {
+    // Default 600s (10 minutes) matching Python timeout=600 for Kaggle GPU generation
+    this.timeoutMs = options?.timeoutMs ?? 600000;
+  }
 
   async chat(request: ChatRequest): Promise<ChatResponse> {
     if (!this.apiKey) {
@@ -19,27 +28,44 @@ export class ZrokProvider implements AIProvider {
     const endpoint = `${this.baseUrl.replace(/\/$/, "")}/v1/chat`;
     const startTime = Date.now();
 
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: request.model || "qwen38-27b",
-        messages: request.messages,
-        stream: false,
-        ...(request.temperature !== undefined && {
-          temperature: request.temperature,
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
+
+    let response: Response;
+    try {
+      response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: request.messages,
+          temperature: request.temperature ?? 0.7,
         }),
-        ...(request.topP !== undefined && {
-          top_p: request.topP,
-        }),
-        ...(request.maxTokens !== undefined && {
-          max_tokens: request.maxTokens,
-        }),
-      }),
-    });
+        signal: controller.signal,
+      });
+    } catch (err: unknown) {
+      if (
+        controller.signal.aborted ||
+        (err instanceof Error && err.name === "AbortError")
+      ) {
+        console.error("[Zrok Provider Error]", {
+          reason: "timeout",
+          timeoutMs: this.timeoutMs,
+        });
+        throw new Error(
+          `Zrok provider request timed out after ${Math.round(this.timeoutMs / 1000)} seconds`,
+        );
+      }
+      console.error("[Zrok Provider Error]", {
+        reason: "network_error",
+        message: err instanceof Error ? err.message : "Unknown error",
+      });
+      throw new Error("Zrok provider network request failed");
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const latencyMs = Date.now() - startTime;
 
@@ -73,13 +99,19 @@ export class ZrokProvider implements AIProvider {
       content = data.message;
     } else if (data.message && typeof data.message.content === "string") {
       content = data.message.content;
+    } else if (typeof data.reply === "string") {
+      content = data.reply;
+    } else if (typeof data.output === "string") {
+      content = data.output;
+    } else if (typeof data.text === "string") {
+      content = data.text;
     } else {
-      content = JSON.stringify(data);
+      content = typeof data === "string" ? data : JSON.stringify(data);
     }
 
     return {
       content: content.trim(),
-      model: data.model || request.model,
+      model: data.model || request.model || "qwen38-27b",
       provider: "zrok",
       latencyMs,
       tokens: data.usage

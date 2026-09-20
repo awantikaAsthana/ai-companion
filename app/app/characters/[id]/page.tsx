@@ -41,8 +41,32 @@ export default function CharacterProfilePage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [chatNotice, setChatNotice] = useState(false);
+  const [startingChat, setStartingChat] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  async function handleStartConversation() {
+    if (!character) return;
+    setStartingChat(true);
+    try {
+      const res = await fetch("/api/conversations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ characterId: character.id }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        router.push(`/app/chat/${data.id}`);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        alert(err.error || "Failed to initiate conversation");
+        setStartingChat(false);
+      }
+    } catch {
+      alert("Network error. Please try again.");
+      setStartingChat(false);
+    }
+  }
 
   async function loadCharacter() {
     setLoading(true);
@@ -286,21 +310,13 @@ export default function CharacterProfilePage({
           {/* Primary Conversation CTA */}
           <div className="space-y-2 pt-2">
             <button
-              onClick={() => setChatNotice(true)}
-              className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_30px_rgba(110,7,23,0.6)]"
+              onClick={handleStartConversation}
+              disabled={startingChat}
+              className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_30px_rgba(110,7,23,0.6)] disabled:opacity-50"
             >
               <MessageSquare className="h-4 w-4 text-[#C9A46A] transition-transform group-hover:scale-110" />
-              <span>Start Conversation</span>
+              <span>{startingChat ? "Entering Sanctuary…" : "Start Conversation"}</span>
             </button>
-
-            {chatNotice && (
-              <p className="text-xs text-[#C9A46A] font-light flex items-center gap-1.5 pt-1">
-                <span>✦</span>
-                <span>
-                  The conversational neural engine connects in Milestone 3 (M3).
-                </span>
-              </p>
-            )}
           </div>
 
           {/* Curated Details Bento */}

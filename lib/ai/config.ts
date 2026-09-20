@@ -34,8 +34,8 @@ export const modelRegistry: Record<AIProviderName, ModelOption[]> = {
       isDefault: true,
     },
     {
-      id: "meta-llama/llama-3.3-70b-instruct:free",
-      name: "Llama 3.3 70B (Free)",
+      id: "qwen/qwen3.8-27b:free",
+      name: "Qwen 3.8 27B (Free)",
       provider: "openrouter",
     },
     {
@@ -43,31 +43,83 @@ export const modelRegistry: Record<AIProviderName, ModelOption[]> = {
       name: "Mistral 7B (Free)",
       provider: "openrouter",
     },
+    {
+      id: "poolside/laguna-s-2.1:free",
+      name: "Laguna S 2.1 (Free)",
+      provider: "openrouter",
+    },
+    {
+      id: "nvidia/nemotron-3.5-lightning:free",
+      name: "Nemotron 3.5 Lightning (Free)",
+      provider: "openrouter",
+    },
   ],
   ollama: [
     {
-      id: "llama3.2",
-      name: "Llama 3.2 (Local)",
+      id: "qwen3-coder:480b-cloud",
+      name: "Qwen 3 Coder 480B (Cloud)",
       provider: "ollama",
       isDefault: true,
     },
     {
-      id: "qwen2.5",
-      name: "Qwen 2.5 (Local)",
+      id: "treyleo16/kimi-k3",
+      name: "Kimi K3 (Ollama)",
       provider: "ollama",
     },
     {
-      id: "mistral",
-      name: "Mistral (Local)",
+      id: "gpt-oss:120b-cloud",
+      name: "GPT-OSS 120B (Cloud)",
+      provider: "ollama",
+    },
+    {
+      id: "gpt-oss:20b-cloud",
+      name: "GPT-OSS 20B (Cloud)",
+      provider: "ollama",
+    },
+    {
+      id: "deepseek-v3.1:671b-cloud",
+      name: "DeepSeek V3.1 671B (Cloud)",
       provider: "ollama",
     },
   ],
-  "ollama-cloud": [],
+  "ollama-cloud": [
+    {
+      id: "qwen3-coder:480b-cloud",
+      name: "Qwen 3 Coder 480B (Cloud)",
+      provider: "ollama-cloud",
+      isDefault: true,
+    },
+    {
+      id: "treyleo16/kimi-k3",
+      name: "Kimi K3 (Ollama)",
+      provider: "ollama-cloud",
+    },
+    {
+      id: "gpt-oss:120b-cloud",
+      name: "GPT-OSS 120B (Cloud)",
+      provider: "ollama-cloud",
+    },
+    {
+      id: "gpt-oss:20b-cloud",
+      name: "GPT-OSS 20B (Cloud)",
+      provider: "ollama-cloud",
+    },
+    {
+      id: "deepseek-v3.1:671b-cloud",
+      name: "DeepSeek V3.1 671B (Cloud)",
+      provider: "ollama-cloud",
+    },
+  ],
   runpod: [],
   lightning: [],
 };
 
 export const providerOptions: ProviderOption[] = [
+  {
+    id: "ollama",
+    name: "Ollama (Cloud / Local)",
+    models: modelRegistry.ollama,
+  },
   {
     id: "zrok",
     name: "Zrok (Kaggle Qwen 27B)",
@@ -77,11 +129,6 @@ export const providerOptions: ProviderOption[] = [
     id: "openrouter",
     name: "OpenRouter",
     models: modelRegistry.openrouter,
-  },
-  {
-    id: "ollama",
-    name: "Ollama (Local)",
-    models: modelRegistry.ollama,
   },
 ];
 

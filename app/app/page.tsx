@@ -10,6 +10,7 @@ import {
   Compass,
   Users,
   Clock,
+  Plus,
 } from "lucide-react";
 import type { ConversationResponse } from "@/lib/conversations/schemas";
 import type { CharacterResponse } from "@/lib/characters/schemas";
@@ -76,17 +77,27 @@ export default function AppHome() {
         <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#6E0717]/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-[#C9A46A]/10 blur-3xl" />
 
-        <div className="relative z-10 space-y-2 max-w-2xl">
-          <span className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.24em] text-[#C9A46A]">
-            <span>✦</span> The Sanctuary
-          </span>
-          <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#F5E9E5] tracking-wide">
-            Companions of Ecstasy
-          </h1>
-          <p className="text-xs sm:text-sm font-light text-[#BFA8A8] leading-relaxed">
-            Select a companion to enter into conversation. Provider and model
-            controls are directly accessible in development mode.
-          </p>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.24em] text-[#C9A46A]">
+              <span>✦</span> The Sanctuary
+            </span>
+            <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#F5E9E5] tracking-wide">
+              Companions of Ecstasy
+            </h1>
+            <p className="text-xs sm:text-sm font-light text-[#BFA8A8] leading-relaxed">
+              Select a companion to enter into conversation. Provider and model
+              controls are directly accessible in development mode.
+            </p>
+          </div>
+
+          <Link
+            href="/app/characters"
+            className="inline-flex items-center gap-2 self-start md:self-auto rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(110,7,23,0.5)]"
+          >
+            <Plus className="h-4 w-4 text-[#C9A46A]" />
+            <span>Craft Companion</span>
+          </Link>
         </div>
       </div>
 

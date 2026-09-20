@@ -38,8 +38,8 @@ export function ChatInterface({
     provider: string;
     model: string;
   }>({
-    provider: "zrok",
-    model: "qwen38-27b",
+    provider: "ollama",
+    model: "qwen3-coder:480b-cloud",
   });
 
   const [lastMeta, setLastMeta] = useState<PostMessageResponse["meta"] | null>(
@@ -71,6 +71,9 @@ export function ChatInterface({
     };
     setMessages((prev) => [...prev, tempUserMessage]);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 600000); // 600s (10 min) matching backend generation timeout
+
     try {
       const res = await fetch(
         `/api/conversations/${conversation.id}/messages`,
@@ -82,6 +85,7 @@ export function ChatInterface({
             provider: aiSelection.provider,
             model: aiSelection.model,
           }),
+          signal: controller.signal,
         },
       );
 
@@ -100,15 +104,22 @@ export function ChatInterface({
       ]);
       setLastMeta(data.meta);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to receive response from companion",
-      );
+      if (controller.signal.aborted) {
+        setError(
+          "Request timed out. The companion is taking too long to respond. Please try again.",
+        );
+      } else {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to receive response from companion",
+        );
+      }
       // Remove temporary message on error
       setMessages((prev) => prev.filter((m) => m.id !== tempUserMessage.id));
       setInput(content); // restore input
     } finally {
+      clearTimeout(timeoutId);
       setSending(false);
     }
   }

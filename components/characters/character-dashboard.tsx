@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Sparkles,
   Plus,
@@ -47,9 +48,37 @@ export function CharacterDashboard() {
     message: string;
   } | null>(null);
 
-  // Chat notice modal/toast
-  const [chatNoticeCharacter, setChatNoticeCharacter] =
-    useState<CharacterResponse | null>(null);
+  const router = useRouter();
+  const [startingChatId, setStartingChatId] = useState<string | null>(null);
+
+  async function handleStartChat(character: CharacterResponse) {
+    setStartingChatId(character.id);
+    try {
+      const res = await fetch("/api/conversations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ characterId: character.id }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        router.push(`/app/chat/${data.id}`);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        setFeedback({
+          type: "error",
+          message: err.error || "Failed to start conversation",
+        });
+        setStartingChatId(null);
+      }
+    } catch {
+      setFeedback({
+        type: "error",
+        message: "Network error. Please try again.",
+      });
+      setStartingChatId(null);
+    }
+  }
 
   async function loadData() {
     setLoading(true);
@@ -358,7 +387,7 @@ export function CharacterDashboard() {
                     <CharacterCard
                       key={char.id}
                       character={char}
-                      onStartChat={(c) => setChatNoticeCharacter(c)}
+                      onStartChat={handleStartChat}
                     />
                   ))}
                 </div>
@@ -412,54 +441,13 @@ export function CharacterDashboard() {
                       onEdit={handleOpenEdit}
                       onDelete={handleDelete}
                       onTogglePublish={handleTogglePublish}
-                      onStartChat={(c) => setChatNoticeCharacter(c)}
+                      onStartChat={handleStartChat}
                     />
                   ))}
                 </div>
               )}
             </section>
           )}
-        </div>
-      )}
-
-      {/* Modal / Toast for Conversation Readiness in M3 */}
-      {chatNoticeCharacter && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-md rounded-2xl border border-[#430D15] bg-[#0E0406] p-6 text-[#F5E9E5] shadow-2xl">
-            <button
-              onClick={() => setChatNoticeCharacter(null)}
-              className="absolute right-4 top-4 rounded-full p-1 text-[#BFA8A8] hover:text-white"
-            >
-              <X className="h-4 w-4" />
-            </button>
-
-            <div className="space-y-3 text-center">
-              <span className="font-serif text-3xl text-[#C9A46A]">✦</span>
-              <h3 className="font-serif text-2xl font-light">
-                Connect with {chatNoticeCharacter.name}
-              </h3>
-              <p className="text-xs text-[#BFA8A8] font-light leading-relaxed">
-                The conversational neural streaming engine connects in{" "}
-                <span className="text-[#C9A46A] font-medium">Milestone 3 (M3)</span>.
-                You can explore their full presence and dynamic in their profile now.
-              </p>
-            </div>
-
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <Link
-                href={`/app/characters/${chatNoticeCharacter.id}`}
-                className="flex-1 text-center rounded-full border border-[#C9A46A]/60 bg-[#21080C] py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#F5E9E5] hover:border-[#C9A46A]"
-              >
-                View Profile
-              </Link>
-              <button
-                onClick={() => setChatNoticeCharacter(null)}
-                className="flex-1 rounded-full border border-[#430D15] py-2.5 text-xs text-[#BFA8A8] hover:text-white"
-              >
-                Return
-              </button>
-            </div>
-          </div>
         </div>
       )}
     </div>
