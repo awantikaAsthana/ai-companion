@@ -3,7 +3,7 @@ import { conversations, messages, characters } from "@/db/schema";
 import { eq, and, desc, asc } from "drizzle-orm";
 import { memoryService } from "@/lib/ai/memory";
 import { buildChatContext } from "@/lib/ai/context";
-import { generateChat } from "@/lib/ai/gateway";
+import { generateChat, type GenerateChatOptions } from "@/lib/ai/gateway";
 import type {
   ConversationResponse,
   MessageResponse,
@@ -226,12 +226,37 @@ export interface PostMessageParams {
   model?: string;
 }
 
+export type ChatGenerator = (
+  options: GenerateChatOptions,
+) => Promise<{
+  content: string;
+  model: string;
+  provider: string;
+  latencyMs?: number;
+  tokens?: {
+    promptTokens?: number;
+    completionTokens?: number;
+    totalTokens?: number;
+    prompt?: number;
+    completion?: number;
+    total?: number;
+  };
+}>;
+
+export type PostMessageResult =
+  | {
+      success: true;
+      data: PostMessageResponse;
+      meta: PostMessageResponse["meta"];
+      userMessage: PostMessageResponse["userMessage"];
+      assistantMessage: PostMessageResponse["assistantMessage"];
+    }
+  | { success: false; status: 400 | 403 | 404 | 502; error: string };
+
 export async function postMessageAndGenerateReply(
   params: PostMessageParams,
-): Promise<
-  | { success: true; data: PostMessageResponse }
-  | { success: false; status: 400 | 403 | 404 | 502; error: string }
-> {
+  chatGenerator: ChatGenerator = generateChat,
+): Promise<PostMessageResult> {
   const { conversationId, userId, content, provider, model } = params;
 
   // 1. Verify ownership and get character reference
@@ -307,7 +332,7 @@ export async function postMessageAndGenerateReply(
   // 6. Execute AI Gateway call
   let aiResponse;
   try {
-    aiResponse = await generateChat({
+    aiResponse = await chatGenerator({
       messages: fullContextMessages,
       provider,
       model,
@@ -347,30 +372,49 @@ export async function postMessageAndGenerateReply(
     .set({ updatedAt: new Date() })
     .where(eq(conversations.id, conversationId));
 
+  const tokens = aiResponse.tokens
+    ? {
+        promptTokens:
+          aiResponse.tokens.promptTokens ??
+          (aiResponse.tokens as any).prompt,
+        completionTokens:
+          aiResponse.tokens.completionTokens ??
+          (aiResponse.tokens as any).completion,
+        totalTokens:
+          aiResponse.tokens.totalTokens ??
+          (aiResponse.tokens as any).total,
+      }
+    : undefined;
+
+  const responseData: PostMessageResponse = {
+    userMessage: {
+      id: userMsg.id,
+      conversationId: userMsg.conversationId,
+      role: "user",
+      content: userMsg.content,
+      createdAt: userMsg.createdAt.toISOString(),
+    },
+    assistantMessage: {
+      id: assistantMsg.id,
+      conversationId: assistantMsg.conversationId,
+      role: "assistant",
+      content: assistantMsg.content,
+      createdAt: assistantMsg.createdAt.toISOString(),
+    },
+    meta: {
+      provider: aiResponse.provider,
+      model: aiResponse.model,
+      latencyMs: aiResponse.latencyMs,
+      tokens,
+    },
+  };
+
   return {
     success: true,
-    data: {
-      userMessage: {
-        id: userMsg.id,
-        conversationId: userMsg.conversationId,
-        role: "user",
-        content: userMsg.content,
-        createdAt: userMsg.createdAt.toISOString(),
-      },
-      assistantMessage: {
-        id: assistantMsg.id,
-        conversationId: assistantMsg.conversationId,
-        role: "assistant",
-        content: assistantMsg.content,
-        createdAt: assistantMsg.createdAt.toISOString(),
-      },
-      meta: {
-        provider: aiResponse.provider,
-        model: aiResponse.model,
-        latencyMs: aiResponse.latencyMs,
-        tokens: aiResponse.tokens,
-      },
-    },
+    data: responseData,
+    meta: responseData.meta,
+    userMessage: responseData.userMessage,
+    assistantMessage: responseData.assistantMessage,
   };
 }
 
