@@ -15,6 +15,15 @@ import {
   characterPublicResponseSchema,
   characterListResponseSchema,
 } from "@/lib/characters/schemas";
+import {
+  createConversationSchema,
+  conversationResponseSchema,
+  conversationListResponseSchema,
+  conversationIdParamSchema,
+  postMessageSchema,
+  conversationMessagesResponseSchema,
+  postMessageResponseSchema,
+} from "@/lib/conversations/schemas";
 
 const validationErrorSchema = z
   .object({
@@ -300,6 +309,201 @@ export const openApiDocument = createDocument({
           },
           "404": {
             description: "Character not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+    },
+    "/api/conversations": {
+      post: {
+        tags: ["Conversations"],
+        summary: "Start a conversation with a character",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": { schema: createConversationSchema },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Conversation created or retrieved",
+            content: {
+              "application/json": { schema: conversationResponseSchema },
+            },
+          },
+          "400": {
+            description: "Validation error",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: Character is private and unpublished",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Character not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+      get: {
+        tags: ["Conversations"],
+        summary: "List current user's conversations",
+        responses: {
+          "200": {
+            description: "List of conversations",
+            content: {
+              "application/json": { schema: conversationListResponseSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+    },
+    "/api/conversations/{id}": {
+      get: {
+        tags: ["Conversations"],
+        summary: "Get conversation details by ID",
+        requestParams: {
+          path: conversationIdParamSchema,
+        },
+        responses: {
+          "200": {
+            description: "Conversation details",
+            content: {
+              "application/json": { schema: conversationResponseSchema },
+            },
+          },
+          "400": {
+            description: "Invalid conversation ID format",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: Not conversation owner",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Conversation not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+    },
+    "/api/conversations/{id}/messages": {
+      get: {
+        tags: ["Conversations"],
+        summary: "Get messages for a conversation",
+        requestParams: {
+          path: conversationIdParamSchema,
+        },
+        responses: {
+          "200": {
+            description: "List of messages",
+            content: {
+              "application/json": { schema: conversationMessagesResponseSchema },
+            },
+          },
+          "400": {
+            description: "Invalid conversation ID format",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: Not conversation owner",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Conversation not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+        },
+      },
+      post: {
+        tags: ["Conversations"],
+        summary: "Post a message and receive an AI assistant reply",
+        requestParams: {
+          path: conversationIdParamSchema,
+        },
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": { schema: postMessageSchema },
+          },
+        },
+        responses: {
+          "200": {
+            description: "User message and generated assistant reply",
+            content: {
+              "application/json": { schema: postMessageResponseSchema },
+            },
+          },
+          "400": {
+            description: "Validation error or invalid JSON",
+            content: {
+              "application/json": { schema: validationErrorSchema },
+            },
+          },
+          "401": {
+            description: "Not authenticated",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "403": {
+            description: "Forbidden: Not conversation owner",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "404": {
+            description: "Conversation not found",
+            content: {
+              "application/json": { schema: errorResponseSchema },
+            },
+          },
+          "502": {
+            description: "AI Provider failure",
             content: {
               "application/json": { schema: errorResponseSchema },
             },
