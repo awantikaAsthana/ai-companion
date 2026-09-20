@@ -14,6 +14,7 @@ import { createSession } from "../../lib/auth/session.js";
 import * as ConversationsRoute from "../../app/api/conversations/route.js";
 import * as ConversationIdRoute from "../../app/api/conversations/[id]/route.js";
 import * as MessagesRoute from "../../app/api/conversations/[id]/messages/route.js";
+import { postMessageAndGenerateReply } from "../../lib/conversations/service.js";
 
 async function cleanup() {
   await db.delete(messages);
@@ -72,36 +73,10 @@ function makeRequest(
 }
 
 describe("Conversations & Chat API", () => {
-  const originalFetch = globalThis.fetch;
-
   before(cleanup);
   beforeEach(async () => {
     await cleanup();
-
-    // Mock fetch for AI provider calls
-    globalThis.fetch = (async (url: string, init?: RequestInit) => {
-      return new Response(
-        JSON.stringify({
-          model: "qwen38-27b",
-          choices: [
-            {
-              message: {
-                role: "assistant",
-                content: "Hello! I am here and listening.",
-              },
-            },
-          ],
-          usage: { prompt_tokens: 10, completion_tokens: 8, total_tokens: 18 },
-        }),
-        { status: 200, headers: { "Content-Type": "application/json" } },
-      );
-    }) as any;
   });
-
-  afterEach(() => {
-    globalThis.fetch = originalFetch;
-  });
-
   after(cleanup);
 
   // 8. Unauthenticated chat
@@ -235,28 +210,33 @@ describe("Conversations & Chat API", () => {
     assert.equal(conv.userId, user.id);
     assert.equal(conv.characterId, char.id);
 
-    // 2. Post user message
-    const msgReq = makeRequest(
-      `http://localhost:3000/api/conversations/${conv.id}/messages`,
-      "POST",
-      sessionId,
-      {
-        content: "Tell me your thoughts.",
-        provider: "zrok",
-        model: "qwen38-27b",
+    const fakeChatGenerator = async () => ({
+      model: "test-model",
+      content: "Hello! I am here and listening.",
+      provider: "test",
+      latencyMs: 1,
+      tokens: {
+        prompt: 10,
+        completion: 8,
+        total: 18,
       },
-    );
-    const msgRes = await MessagesRoute.POST(msgReq, {
-      params: Promise.resolve({ id: conv.id }),
     });
-    assert.equal(msgRes.status, 200);
-    const msgData = await msgRes.json();
 
-    assert.equal(msgData.userMessage.content, "Tell me your thoughts.");
-    assert.equal(msgData.userMessage.role, "user");
-    assert.equal(msgData.assistantMessage.content, "Hello! I am here and listening.");
-    assert.equal(msgData.assistantMessage.role, "assistant");
-    assert.equal(msgData.meta.provider, "zrok");
+    const result = await postMessageAndGenerateReply(
+      {
+        conversationId: conv.id,
+        userId: user.id,
+        content: "Tell me your thoughts.",
+      },
+      fakeChatGenerator,
+    );
+
+    assert.ok(result.success);
+    assert.equal(result.userMessage.content, "Tell me your thoughts.");
+    assert.equal(result.userMessage.role, "user");
+    assert.equal(result.assistantMessage.content, "Hello! I am here and listening.");
+    assert.equal(result.assistantMessage.role, "assistant");
+    assert.equal(result.meta.provider, "test");
 
     // 3. Verify messages are saved in database
     const savedMessages = await db
@@ -279,25 +259,23 @@ describe("Conversations & Chat API", () => {
     const createRes = await ConversationsRoute.POST(createReq);
     const conv = await createRes.json();
 
-    // Mock fetch to simulate AI provider failure
-    globalThis.fetch = (async () => {
-      return new Response("Upstream Server Error", { status: 500 });
-    }) as any;
+    const failingChatGenerator = async () => {
+      throw new Error("AI provider failed");
+    };
 
-    const msgReq = makeRequest(
-      `http://localhost:3000/api/conversations/${conv.id}/messages`,
-      "POST",
-      sessionId,
-      { content: "This should not be orphaned" },
+    const result = await postMessageAndGenerateReply(
+      {
+        conversationId: conv.id,
+        userId: user.id,
+        content: "This should not be orphaned",
+      },
+      failingChatGenerator,
     );
-    const msgRes = await MessagesRoute.POST(msgReq, {
-      params: Promise.resolve({ id: conv.id }),
-    });
 
-    assert.equal(msgRes.status, 502);
-    const errData = await msgRes.json();
+    assert.equal(result.success, false);
+    assert.equal(result.status, 502);
     assert.equal(
-      errData.error,
+      result.error,
       "AI provider failed to generate a reply. Please try again later.",
     );
 
