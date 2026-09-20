@@ -315,7 +315,7 @@ export default function CharacterProfilePage({
               className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_30px_rgba(110,7,23,0.6)] disabled:opacity-50"
             >
               <MessageSquare className="h-4 w-4 text-[#C9A46A] transition-transform group-hover:scale-110" />
-              <span>{startingChat ? "Entering Sanctuary…" : "Start Conversation"}</span>
+              <span>{startingChat ? "Connecting…" : "Start Conversation"}</span>
             </button>
           </div>
 

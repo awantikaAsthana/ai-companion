@@ -49,10 +49,8 @@ export function CharacterDashboard() {
   } | null>(null);
 
   const router = useRouter();
-  const [startingChatId, setStartingChatId] = useState<string | null>(null);
 
   async function handleStartChat(character: CharacterResponse) {
-    setStartingChatId(character.id);
     try {
       const res = await fetch("/api/conversations", {
         method: "POST",
@@ -69,14 +67,12 @@ export function CharacterDashboard() {
           type: "error",
           message: err.error || "Failed to start conversation",
         });
-        setStartingChatId(null);
       }
     } catch {
       setFeedback({
         type: "error",
         message: "Network error. Please try again.",
       });
-      setStartingChatId(null);
     }
   }
 

@@ -72,28 +72,27 @@ export default function AppHome() {
 
   return (
     <div className="space-y-12 pb-16">
-      {/* Hero Welcome Header */}
-      <div className="relative overflow-hidden rounded-3xl border border-[#430D15]/60 bg-gradient-to-b from-[#120507] via-[#0E0406] to-[#090405] p-6 sm:p-10 shadow-[0_16px_50px_rgba(9,4,5,0.8)]">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#6E0717]/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-[#C9A46A]/10 blur-3xl" />
+      {/* Editorial Hero Header */}
+      <div className="relative pt-2 pb-6 sm:pb-8">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#6E0717]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-[#C9A46A]/8 blur-3xl" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.24em] text-[#C9A46A]">
-              <span>✦</span> The Sanctuary
-            </span>
-            <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#F5E9E5] tracking-wide">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#430D15]/40 pb-8 sm:pb-10">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.26em] text-[#C9A46A]">
+              <span className="text-[10px]">✦</span> The Sanctuary
+            </div>
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-[#F5E9E5] tracking-tight">
               Companions of Ecstasy
             </h1>
-            <p className="text-xs sm:text-sm font-light text-[#BFA8A8] leading-relaxed">
-              Select a companion to enter into conversation. Provider and model
-              controls are directly accessible in development mode.
+            <p className="text-xs sm:text-sm font-light text-[#BFA8A8] leading-relaxed max-w-xl">
+              Select a companion to enter into conversation, or craft a new presence tailored to your desire.
             </p>
           </div>
 
           <Link
             href="/app/characters"
-            className="inline-flex items-center gap-2 self-start md:self-auto rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(110,7,23,0.5)]"
+            className="inline-flex items-center gap-2 self-start md:self-auto rounded-full border border-[#C9A46A]/50 bg-gradient-to-r from-[#21080C] via-[#430D15] to-[#21080C] px-6 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(201,164,106,0.15)] active:scale-[0.98]"
           >
             <Plus className="h-4 w-4 text-[#C9A46A]" />
             <span>Craft Companion</span>

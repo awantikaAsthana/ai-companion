@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { Sparkles, LogOut } from "lucide-react";
+import { CharacterAmbientBackground } from "@/components/characters/character-ambient-background";
 
 interface User {
   id: string;
@@ -57,8 +58,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="relative min-h-dvh bg-[#090405] text-[#F5E9E5]">
-      {/* Subtle atmospheric ambient glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(110,7,23,0.15),rgba(9,4,5,0))]" />
+      {/* Subtle letter texture & rose ambient framing */}
+      <CharacterAmbientBackground />
 
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#430D15]/40 bg-[#090405]/80 px-4 py-3 sm:px-8 backdrop-blur-md">
         <div className="flex items-center gap-6">
@@ -74,12 +75,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden sm:flex items-center gap-1 border-l border-[#430D15]/60 pl-6">
+          <nav className="hidden sm:flex items-center gap-2 border-l border-[#430D15]/60 pl-6">
             <Link
               href="/app"
-              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+              className={`rounded-full px-4 py-1 text-xs font-medium uppercase tracking-wider transition-all ${
                 pathname === "/app"
-                  ? "border border-[#C9A46A]/40 bg-[#21080C] text-[#F5E9E5]"
+                  ? "border border-[#C9A46A]/50 bg-[#21080C] text-[#F5E9E5] shadow-[0_0_12px_rgba(201,164,106,0.15)]"
                   : "text-[#BFA8A8] hover:text-[#F5E9E5]"
               }`}
             >
@@ -87,9 +88,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </Link>
             <Link
               href="/app/characters"
-              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+              className={`rounded-full px-4 py-1 text-xs font-medium uppercase tracking-wider transition-all ${
                 pathname.startsWith("/app/characters")
-                  ? "border border-[#C9A46A]/40 bg-[#21080C] text-[#F5E9E5]"
+                  ? "border border-[#C9A46A]/50 bg-[#21080C] text-[#F5E9E5] shadow-[0_0_12px_rgba(201,164,106,0.15)]"
                   : "text-[#BFA8A8] hover:text-[#F5E9E5]"
               }`}
             >
@@ -120,7 +121,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main className="px-4 py-6 sm:px-8 sm:py-10 max-w-7xl mx-auto">{children}</main>
+      <main className="relative z-10 px-4 py-6 sm:px-8 sm:py-10 max-w-7xl mx-auto">{children}</main>
     </div>
   );
 }

@@ -23,6 +23,20 @@ export function HeroCharacter({
       {/* Deep Crimson Backlight Core */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[550px] w-[550px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#6E0717]/50 via-[#430D15]/25 to-transparent blur-3xl" />
 
+      {/* Handwritten Letter Intimate Halo behind character */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.22] mix-blend-screen"
+        style={{
+          backgroundImage: `url('/landing/letter-bg.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          maskImage:
+            "radial-gradient(circle, black 35%, rgba(0,0,0,0.6) 65%, transparent 88%)",
+          WebkitMaskImage:
+            "radial-gradient(circle, black 35%, rgba(0,0,0,0.6) 65%, transparent 88%)",
+        }}
+      />
+
       {/* Warm Champagne Gold Rim Light Accent */}
       <div className="pointer-events-none absolute right-4 top-1/3 h-[420px] w-[360px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#C9A46A]/20 via-[#6E0717]/10 to-transparent blur-2xl opacity-60" />
 

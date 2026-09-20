@@ -160,21 +160,6 @@ export function CharacterCard({
 
           {isOwner && ownerChar ? (
             <div className="flex items-center gap-1.5">
-              {onStartChat && (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onStartChat(ownerChar);
-                  }}
-                  title="Start Conversation"
-                  className="flex h-8 items-center gap-1 rounded-full border border-[#C9A46A]/50 bg-[#21080C]/90 px-2.5 text-[11px] font-medium text-[#F5E9E5] transition-all hover:border-[#C9A46A] hover:bg-[#6E0717]"
-                >
-                  <MessageSquare className="h-3 w-3 text-[#C9A46A]" />
-                  <span className="hidden sm:inline">Chat</span>
-                </button>
-              )}
-
               {onTogglePublish && (
                 <button
                   type="button"
