@@ -92,7 +92,7 @@ export default function AppHome() {
 
           <Link
             href="/app/characters"
-            className="inline-flex items-center gap-2 self-start md:self-auto rounded-full border border-[#C9A46A]/50 bg-gradient-to-r from-[#21080C] via-[#430D15] to-[#21080C] px-6 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(201,164,106,0.15)] active:scale-[0.98]"
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto min-h-[44px] self-start md:self-auto rounded-full border border-[#C9A46A]/50 bg-gradient-to-r from-[#21080C] via-[#430D15] to-[#21080C] px-6 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(201,164,106,0.15)] active:scale-[0.98] touch-manipulation"
           >
             <Plus className="h-4 w-4 text-[#C9A46A]" />
             <span>Craft Companion</span>
@@ -128,33 +128,33 @@ export default function AppHome() {
                   <Link
                     key={conv.id}
                     href={`/app/chat/${conv.id}`}
-                    className="group flex items-center justify-between rounded-2xl border border-[#430D15]/60 bg-[#120507] p-4 transition-all duration-300 hover:border-[#C9A46A]/40 hover:bg-[#1A070A]"
+                    className="group flex items-center justify-between rounded-2xl border border-[#430D15]/60 bg-[#120507] p-4 transition-all duration-300 hover:border-[#C9A46A]/40 hover:bg-[#1A070A] touch-manipulation"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
                       {conv.character?.avatarUrl ? (
                         <img
                           src={conv.character.avatarUrl}
                           alt={conv.character.name}
-                          className="h-11 w-11 rounded-full object-cover object-top border border-[#C9A46A]/30"
+                          className="h-11 w-11 rounded-full object-cover object-top border border-[#C9A46A]/30 shrink-0"
                         />
                       ) : (
-                        <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#430D15] bg-[#21080C] font-serif text-sm text-[#C9A46A]">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#430D15] bg-[#21080C] font-serif text-sm text-[#C9A46A] shrink-0">
                           {conv.character?.name?.charAt(0) || "✦"}
                         </div>
                       )}
 
-                      <div>
-                        <h3 className="font-serif text-base font-medium text-[#F5E9E5] group-hover:text-[#C9A46A] transition-colors">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-serif text-base font-medium text-[#F5E9E5] group-hover:text-[#C9A46A] transition-colors truncate">
                           {conv.character?.name || "Companion"}
                         </h3>
-                        <p className="text-[11px] text-[#BFA8A8] font-light">
+                        <p className="text-[11px] text-[#BFA8A8] font-light truncate">
                           Active thread · Updated{" "}
                           {new Date(conv.updatedAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
 
-                    <div className="rounded-full p-2 text-[#BFA8A8] group-hover:text-[#F5E9E5] transition-colors">
+                    <div className="rounded-full p-2 text-[#BFA8A8] group-hover:text-[#F5E9E5] transition-colors shrink-0">
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </Link>
@@ -239,7 +239,7 @@ export default function AppHome() {
                       <button
                         onClick={() => handleStartConversation(char.id)}
                         disabled={startingChatWithId === char.id}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-[#C9A46A]/50 bg-gradient-to-r from-[#21080C] to-[#6E0717]/80 px-4 py-1.5 text-xs font-medium text-[#F5E9E5] transition-all hover:border-[#C9A46A] hover:shadow-[0_0_15px_rgba(110,7,23,0.4)] disabled:opacity-50"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[#C9A46A]/50 bg-gradient-to-r from-[#21080C] to-[#6E0717]/80 px-4 py-2 min-h-[38px] text-xs font-medium text-[#F5E9E5] transition-all hover:border-[#C9A46A] hover:shadow-[0_0_15px_rgba(110,7,23,0.4)] disabled:opacity-50 touch-manipulation"
                       >
                         <MessageSquare className="h-3.5 w-3.5 text-[#C9A46A]" />
                         <span>

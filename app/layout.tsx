@@ -15,6 +15,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+export const viewport = {
+  themeColor: "#090405",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   title: "Ecstasy — Someone Made For You",
   description: "Create an AI companion with a personality, presence, and emotional connection that feels uniquely yours.",

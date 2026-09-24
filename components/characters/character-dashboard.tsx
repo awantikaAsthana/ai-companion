@@ -222,7 +222,7 @@ export function CharacterDashboard() {
           {!isFormOpen && (
             <button
               onClick={handleOpenCreate}
-              className="inline-flex items-center gap-2 self-start md:self-auto rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(110,7,23,0.5)]"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto min-h-[44px] self-start md:self-auto rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(110,7,23,0.5)] touch-manipulation"
             >
               <Plus className="h-4 w-4 text-[#C9A46A]" />
               <span>Craft Companion</span>
@@ -267,10 +267,10 @@ export function CharacterDashboard() {
 
       {/* Navigation Filter Tabs */}
       {!loading && !error && (
-        <div className="flex items-center gap-2 border-b border-[#430D15]/40 pb-4 overflow-x-auto">
+        <div className="flex items-center gap-2 border-b border-[#430D15]/40 pb-4 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setActiveTab("all")}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+            className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-xs font-medium transition-all touch-manipulation ${
               activeTab === "all"
                 ? "border border-[#C9A46A]/50 bg-[#21080C] text-[#F5E9E5]"
                 : "text-[#BFA8A8] hover:text-[#F5E9E5]"
@@ -281,7 +281,7 @@ export function CharacterDashboard() {
 
           <button
             onClick={() => setActiveTab("discover")}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+            className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-xs font-medium transition-all touch-manipulation ${
               activeTab === "discover"
                 ? "border border-[#C9A46A]/50 bg-[#21080C] text-[#F5E9E5]"
                 : "text-[#BFA8A8] hover:text-[#F5E9E5]"
@@ -292,7 +292,7 @@ export function CharacterDashboard() {
 
           <button
             onClick={() => setActiveTab("my")}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+            className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-xs font-medium transition-all touch-manipulation ${
               activeTab === "my"
                 ? "border border-[#C9A46A]/50 bg-[#21080C] text-[#F5E9E5]"
                 : "text-[#BFA8A8] hover:text-[#F5E9E5]"
@@ -422,7 +422,7 @@ export function CharacterDashboard() {
                   </div>
                   <button
                     onClick={handleOpenCreate}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#C9A46A]/50 bg-[#21080C] px-5 py-2 text-xs font-medium text-[#F5E9E5] hover:border-[#C9A46A]"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#C9A46A]/50 bg-[#21080C] px-5 py-2.5 min-h-[44px] text-xs font-medium text-[#F5E9E5] hover:border-[#C9A46A] touch-manipulation"
                   >
                     <Plus className="h-3.5 w-3.5 text-[#C9A46A]" />
                     <span>Create Your First Companion</span>

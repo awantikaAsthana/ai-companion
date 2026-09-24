@@ -35,12 +35,12 @@ export function Personalization() {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <section id="connection" className="relative py-28 sm:py-40 border-t border-[#430D15]/30 overflow-hidden">
+    <section id="connection" className="relative py-8 sm:py-14 lg:py-28 border-t border-[#430D15]/30 overflow-hidden">
       {/* Subtle background atmospheric glow */}
       <div className="pointer-events-none absolute -left-32 top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-[#6E0717]/15 blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
           {/* Visual Column: Large Immersive Character Portrait */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
@@ -49,7 +49,7 @@ export function Personalization() {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 relative order-2 lg:order-1 flex justify-center"
           >
-            <div className="relative w-full max-w-[480px] h-[520px] sm:h-[620px] lg:h-[700px] rounded-3xl overflow-hidden border border-[#430D15]/60 bg-[#120507] shadow-[0_25px_60px_rgba(0,0,0,0.7)]">
+            <div className="relative w-full max-w-[480px] h-[320px] xs:h-[380px] sm:h-[560px] lg:h-[700px] rounded-3xl overflow-hidden border border-[#430D15]/60 bg-[#120507] shadow-[0_25px_60px_rgba(0,0,0,0.7)]">
               {!imageError ? (
                 <img
                   src="/characters/character-03.webp"
@@ -79,14 +79,14 @@ export function Personalization() {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090405] via-transparent to-black/25" />
 
               {/* Floating Intimate Quote Moment */}
-              <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl backdrop-blur-xl bg-[#090405]/85 border border-[#430D15]/70 shadow-2xl">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="font-serif text-lg text-[#F5E9E5]">Maya</span>
+              <div className="absolute bottom-2.5 sm:bottom-6 left-2.5 sm:left-6 right-2.5 sm:right-6 p-3 sm:p-5 rounded-2xl backdrop-blur-xl bg-[#090405]/85 border border-[#430D15]/70 shadow-2xl">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-serif text-base sm:text-lg text-[#F5E9E5]">Maya</span>
                   <span className="text-[10px] uppercase tracking-wider text-[#C9A46A]/80 font-medium">
                     · Presence
                   </span>
                 </div>
-                <p className="font-serif text-sm text-[#F5E9E5]/90 italic leading-snug">
+                <p className="font-serif text-xs sm:text-sm text-[#F5E9E5]/90 italic leading-snug">
                   &ldquo;I remember the exact phrase you whispered when the lights went down.&rdquo;
                 </p>
               </div>
@@ -101,18 +101,18 @@ export function Personalization() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 order-1 lg:order-2"
           >
-            <span className="text-xs sm:text-[13px] font-medium uppercase tracking-[0.28em] text-[#C9A46A] mb-4 block">
+            <span className="text-xs sm:text-[13px] font-medium uppercase tracking-[0.28em] text-[#C9A46A] mb-2 sm:mb-3 block">
               INTIMATE ATTUNEMENT
             </span>
 
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#F5E9E5] mb-6 leading-tight">
+            <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#F5E9E5] mb-3.5 sm:mb-5 leading-tight">
               Made for your kind <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#F5E9E5] to-[#C9A46A]">
                 of connection.
               </span>
             </h2>
 
-            <p className="text-base sm:text-lg text-[#BFA8A8] font-light leading-relaxed mb-10 max-w-[52ch]">
+            <p className="text-sm sm:text-base lg:text-lg text-[#BFA8A8] font-light leading-relaxed mb-4 sm:mb-6 lg:mb-8 max-w-[52ch]">
               True chemistry is never templated. Shape every dimension of your
               companion so their presence mirrors what you seek in an intimate confidant.
             </p>
@@ -122,7 +122,7 @@ export function Personalization() {
               {DIMENSIONS.map((dim) => (
                 <div
                   key={dim.label}
-                  className="py-4 sm:py-5 flex items-start gap-4 sm:gap-6 group transition-colors duration-300"
+                  className="py-2.5 sm:py-3.5 lg:py-5 flex items-start gap-3.5 sm:gap-6 group transition-colors duration-300"
                 >
                   <span className="font-serif text-sm sm:text-base text-[#C9A46A]/60 w-6 shrink-0 pt-0.5 group-hover:text-[#C9A46A] transition-colors">
                     {dim.index}

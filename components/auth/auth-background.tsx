@@ -71,7 +71,7 @@ export function AuthBackground() {
           y: { duration: 12, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 15, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute -top-8 right-0 w-36 sm:w-52 md:w-64 lg:w-[320px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_35px_rgba(110,7,23,0.4)]"
+        className="absolute -top-8 right-0 w-24 sm:w-52 md:w-64 lg:w-[320px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_35px_rgba(110,7,23,0.4)] opacity-60 sm:opacity-90"
       >
         <img
           src="/landing/rose-cluster-top.png"
@@ -95,7 +95,7 @@ export function AuthBackground() {
           y: { duration: 13, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 14, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute -bottom-6 -left-6 sm:left-4 md:left-8 w-28 sm:w-40 md:w-48 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.4)]"
+        className="absolute -bottom-6 -left-6 sm:left-4 md:left-8 w-20 sm:w-40 md:w-48 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.4)] opacity-50 sm:opacity-85"
       >
         <img
           src="/landing/rose-single-bloom.png"

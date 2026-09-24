@@ -175,13 +175,13 @@ export function CharacterForm({
                 <span className="block text-[11px] text-[#BFA8A8] mb-1.5">
                   Portrait Presets:
                 </span>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   {PRESET_AVATARS.map((url, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => setAvatarUrl(url)}
-                      className={`relative h-10 w-10 overflow-hidden rounded-full border transition-all ${
+                      className={`relative h-11 w-11 min-h-[44px] min-w-[44px] overflow-hidden rounded-full border transition-all touch-manipulation ${
                         avatarUrl === url
                           ? "border-[#C9A46A] ring-2 ring-[#C9A46A]/40 scale-105"
                           : "border-[#430D15] opacity-60 hover:opacity-100"
@@ -206,7 +206,7 @@ export function CharacterForm({
                   value={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                   placeholder="/characters/character-01.webp"
-                  className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-3 py-2 text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-3 py-2 text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors touch-manipulation"
                 />
               </div>
             </div>
@@ -223,7 +223,7 @@ export function CharacterForm({
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Elena, Julian, Morgan"
                   required
-                  className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-sm text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors font-serif"
+                  className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-base sm:text-sm text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors font-serif touch-manipulation"
                 />
               </div>
 
@@ -236,7 +236,7 @@ export function CharacterForm({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="A short poetic description or archetype synopsis..."
-                  className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors leading-relaxed"
+                  className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors leading-relaxed touch-manipulation"
                 />
               </div>
             </div>
@@ -262,7 +262,7 @@ export function CharacterForm({
                 value={personality}
                 onChange={(e) => setPersonality(e.target.value)}
                 placeholder="Quietly observant, deeply loyal, wry humor"
-                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors touch-manipulation"
               />
             </div>
 
@@ -275,7 +275,7 @@ export function CharacterForm({
                 value={interestsText}
                 onChange={(e) => setInterestsText(e.target.value)}
                 placeholder="Philosophy, Late 19th Century Poetry, Astronomy"
-                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors touch-manipulation"
               />
               {parsedInterests.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -312,7 +312,7 @@ export function CharacterForm({
                 value={communicationStyle}
                 onChange={(e) => setCommunicationStyle(e.target.value)}
                 placeholder="Intimate and reflective, unhurried prose"
-                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors touch-manipulation"
               />
             </div>
 
@@ -325,7 +325,7 @@ export function CharacterForm({
                 value={relationshipDynamic}
                 onChange={(e) => setRelationshipDynamic(e.target.value)}
                 placeholder="Intellectual confidant, enigmatic muse"
-                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[#430D15]/80 bg-[#120507]/90 px-4 py-2.5 text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none transition-colors touch-manipulation"
               />
             </div>
           </div>
@@ -357,7 +357,7 @@ export function CharacterForm({
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="You are Elena. You maintain an intimate, poetic presence with the user. You recall past subtleties, avoid robotic pleasantries, and speak with quiet emotional depth..."
             required
-            className="w-full rounded-lg border border-[#430D15]/80 bg-[#090405] px-4 py-3 font-mono text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/30 focus:border-[#C9A46A] focus:outline-none transition-colors leading-relaxed"
+            className="w-full rounded-lg border border-[#430D15]/80 bg-[#090405] px-4 py-3 font-mono text-base sm:text-xs text-[#F5E9E5] placeholder-[#BFA8A8]/30 focus:border-[#C9A46A] focus:outline-none transition-colors leading-relaxed touch-manipulation"
           />
         </section>
 
@@ -454,12 +454,12 @@ export function CharacterForm({
         </section>
 
         {/* Footer Actions */}
-        <div className="flex items-center justify-end gap-3 border-t border-[#430D15]/60 pt-6">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 border-t border-[#430D15]/60 pt-6">
           <button
             type="button"
             onClick={onCancel}
             disabled={submitting}
-            className="rounded-full px-5 py-2.5 text-xs font-medium text-[#BFA8A8] hover:text-[#F5E9E5] transition-colors disabled:opacity-50"
+            className="rounded-full px-5 py-3 min-h-[44px] text-xs font-medium text-[#BFA8A8] hover:text-[#F5E9E5] transition-colors disabled:opacity-50 text-center touch-manipulation"
           >
             Discard
           </button>
@@ -467,7 +467,7 @@ export function CharacterForm({
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex items-center gap-2 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(110,7,23,0.5)] disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-6 py-3 min-h-[44px] text-xs font-semibold uppercase tracking-[0.16em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_25px_rgba(110,7,23,0.5)] disabled:opacity-50 touch-manipulation"
           >
             <Sparkles className="h-3.5 w-3.5 text-[#C9A46A]" />
             <span>

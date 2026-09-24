@@ -72,13 +72,13 @@ export function AuthForm({
   }
 
   return (
-    <div className="relative w-full max-w-[420px] rounded-3xl border border-[#430D15]/80 bg-[#120507]/65 p-7 sm:p-9 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(201,164,106,0.15)] transition-all duration-300 hover:border-[#C9A46A]/30">
+    <div className="relative w-full max-w-[420px] rounded-3xl border border-[#430D15]/80 bg-[#120507]/65 p-5 sm:p-9 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(201,164,106,0.15)] transition-all duration-300 hover:border-[#C9A46A]/30">
       {/* Decorative top badge */}
-      <div className="flex flex-col items-center text-center mb-7">
+      <div className="flex flex-col items-center text-center mb-6 sm:mb-7">
         <div className="mb-3.5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#C9A46A]/30 bg-[#21080C]/80 shadow-[0_0_20px_rgba(110,7,23,0.5)]">
           <Sparkles className="h-4 w-4 text-[#C9A46A]" />
         </div>
-        <h1 className="font-serif text-3xl sm:text-4xl font-light tracking-tight text-[#F5E9E5]">
+        <h1 className="font-serif text-2xl sm:text-4xl font-light tracking-tight text-[#F5E9E5]">
           {title}
         </h1>
         {subtitle && (
@@ -111,7 +111,7 @@ export function AuthForm({
               placeholder={field.placeholder}
               autoComplete={field.autoComplete}
               disabled={submitting}
-              className="w-full rounded-xl border border-[#430D15]/80 bg-[#090405]/75 px-4 py-3 text-sm text-[#F5E9E5] placeholder-[#BFA8A8]/35 transition-all duration-200 focus:border-[#C9A46A]/70 focus:bg-[#120507]/90 focus:outline-none focus:ring-1 focus:ring-[#C9A46A]/40 disabled:opacity-50"
+              className="w-full rounded-xl border border-[#430D15]/80 bg-[#090405]/75 px-4 py-3 text-base sm:text-sm text-[#F5E9E5] placeholder-[#BFA8A8]/35 transition-all duration-200 focus:border-[#C9A46A]/70 focus:bg-[#120507]/90 focus:outline-none focus:ring-1 focus:ring-[#C9A46A]/40 disabled:opacity-50 touch-manipulation"
             />
             {fieldErrors[field.name] && (
               <p className="mt-1.5 text-xs text-[#E8A0A8]">
@@ -125,7 +125,7 @@ export function AuthForm({
           <button
             type="submit"
             disabled={submitting}
-            className="group relative flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#6E0717] via-[#8F1025] to-[#6E0717] px-6 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-[0.16em] text-[#F5E9E5] shadow-[0_0_25px_rgba(110,7,23,0.45)] transition-all duration-300 hover:shadow-[0_0_40px_rgba(181,30,58,0.65)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group relative flex w-full min-h-[48px] items-center justify-center rounded-full bg-gradient-to-r from-[#6E0717] via-[#8F1025] to-[#6E0717] px-6 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-[0.16em] text-[#F5E9E5] shadow-[0_0_25px_rgba(110,7,23,0.45)] transition-all duration-300 hover:shadow-[0_0_40px_rgba(181,30,58,0.65)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
           >
             <span>{submitting ? "Please wait…" : submitLabel}</span>
             {!submitting && (

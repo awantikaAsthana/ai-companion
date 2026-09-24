@@ -164,20 +164,20 @@ export default function CharacterProfilePage({
   return (
     <div className="space-y-8 pb-16">
       {/* Top Breadcrumb Navigation */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <Link
           href="/app"
-          className="group inline-flex items-center gap-2 text-xs text-[#BFA8A8] hover:text-[#F5E9E5] transition-colors"
+          className="group inline-flex items-center gap-2 text-xs text-[#BFA8A8] hover:text-[#F5E9E5] transition-colors min-h-[38px] touch-manipulation"
         >
           <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
           <span>Return to Companions</span>
         </Link>
 
         {isOwner && ownerChar && (
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={handleTogglePublish}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[#430D15]/80 bg-[#120507] px-3 py-1.5 text-xs text-[#BFA8A8] hover:border-[#C9A46A]/50 hover:text-[#F5E9E5] transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#430D15]/80 bg-[#120507] px-3.5 py-2 min-h-[38px] text-xs text-[#BFA8A8] hover:border-[#C9A46A]/50 hover:text-[#F5E9E5] transition-colors touch-manipulation"
             >
               {ownerChar.isPublished ? (
                 <>
@@ -194,7 +194,7 @@ export default function CharacterProfilePage({
 
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[#430D15]/80 bg-[#120507] px-3 py-1.5 text-xs text-[#BFA8A8] hover:border-[#C9A46A]/50 hover:text-[#F5E9E5] transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#430D15]/80 bg-[#120507] px-3.5 py-2 min-h-[38px] text-xs text-[#BFA8A8] hover:border-[#C9A46A]/50 hover:text-[#F5E9E5] transition-colors touch-manipulation"
             >
               <Edit3 className="h-3.5 w-3.5" />
               <span>{isEditing ? "Close Editor" : "Edit Presence"}</span>
@@ -202,10 +202,10 @@ export default function CharacterProfilePage({
 
             <button
               onClick={handleDelete}
-              className="inline-flex items-center gap-1.5 rounded-full border border-rose-900/60 bg-rose-950/30 px-3 py-1.5 text-xs text-rose-300 hover:bg-rose-900/40 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full border border-rose-900/60 bg-rose-950/30 px-3.5 py-2 min-h-[38px] text-xs text-rose-300 hover:bg-rose-900/40 transition-colors touch-manipulation"
             >
               <Trash2 className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Delete</span>
+              <span>Delete</span>
             </button>
           </div>
         )}
@@ -283,7 +283,9 @@ export default function CharacterProfilePage({
 
             {/* Bottom Floating Title Overlay for Mobile */}
             <div className="absolute bottom-6 left-6 right-6 lg:hidden">
-              <h1 className="font-serif text-4xl text-[#F5E9E5]">{character.name}</h1>
+              <h1 className="font-serif text-3xl sm:text-4xl text-[#F5E9E5] break-words line-clamp-2 drop-shadow-[0_2px_12px_rgba(9,4,5,1)]">
+                {character.name}
+              </h1>
             </div>
           </div>
         </div>
@@ -312,7 +314,7 @@ export default function CharacterProfilePage({
             <button
               onClick={handleStartConversation}
               disabled={startingChat}
-              className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_30px_rgba(110,7,23,0.6)] disabled:opacity-50"
+              className="group flex w-full sm:w-auto min-h-[48px] items-center justify-center gap-3 rounded-full border border-[#C9A46A]/60 bg-gradient-to-r from-[#21080C] via-[#6E0717] to-[#21080C] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:shadow-[0_0_30px_rgba(110,7,23,0.6)] disabled:opacity-50 touch-manipulation"
             >
               <MessageSquare className="h-4 w-4 text-[#C9A46A] transition-transform group-hover:scale-110" />
               <span>{startingChat ? "Connecting…" : "Start Conversation"}</span>

@@ -40,19 +40,19 @@ export function FloatingChatBubble({
           delay: delay + 0.2,
         },
       }}
-      className={`relative inline-flex items-center gap-3 rounded-2xl bg-[#120507]/80 px-4 py-2.5 backdrop-blur-xl border transition-all duration-300 ${glowBorder} ${className}`}
+      className={`relative inline-flex items-center gap-2.5 sm:gap-3 max-w-[calc(100vw-3rem)] sm:max-w-none rounded-2xl bg-[#120507]/85 px-3 py-2 sm:px-4 sm:py-2.5 backdrop-blur-xl border transition-all duration-300 ${glowBorder} ${className}`}
     >
-      <span className="relative flex h-2 w-2">
+      <span className="relative flex h-2 w-2 shrink-0">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#B51E3A] opacity-75" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-[#B51E3A]" />
       </span>
 
-      <span className="text-xs sm:text-sm font-light tracking-wide text-[#F5E9E5]">
+      <span className="text-xs sm:text-sm font-light tracking-wide text-[#F5E9E5] truncate sm:whitespace-normal">
         {message}
       </span>
 
       {time && (
-        <span className="text-[10px] uppercase tracking-wider text-[#BFA8A8]/60">
+        <span className="text-[10px] uppercase tracking-wider text-[#BFA8A8]/60 shrink-0">
           {time}
         </span>
       )}

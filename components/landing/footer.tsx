@@ -3,9 +3,9 @@ import { Sparkles } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="relative z-20 border-t border-[#430D15]/60 bg-[#090405] py-16 text-[#BFA8A8]">
+    <footer className="relative z-20 border-t border-[#430D15]/60 bg-[#090405] py-8 sm:py-12 lg:py-16 text-[#BFA8A8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-8">
           {/* Brand */}
           <Link
             href="/"
@@ -23,35 +23,35 @@ export function Footer() {
           {/* Links */}
           <nav
             aria-label="Footer Navigation"
-            className="flex flex-wrap items-center justify-center gap-8 text-xs uppercase tracking-[0.2em]"
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-8 text-xs uppercase tracking-[0.2em]"
           >
             <Link
               href="#characters"
-              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5] min-h-[40px] inline-flex items-center"
             >
               Discover
             </Link>
             <Link
               href="#how-it-works"
-              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5] min-h-[40px] inline-flex items-center"
             >
               How It Works
             </Link>
             <Link
               href="#privacy"
-              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5] min-h-[40px] inline-flex items-center"
             >
               Privacy
             </Link>
             <Link
               href="#"
-              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5] min-h-[40px] inline-flex items-center"
             >
               Terms
             </Link>
             <Link
               href="#"
-              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+              className="text-[#BFA8A8] transition-colors hover:text-[#F5E9E5] min-h-[40px] inline-flex items-center"
             >
               Contact
             </Link>

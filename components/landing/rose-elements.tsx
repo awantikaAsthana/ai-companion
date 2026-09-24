@@ -21,7 +21,7 @@ export function RoseElements() {
           y: { duration: 11, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 14, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute -top-3 right-0 sm:right-2 md:right-8 w-44 sm:w-60 md:w-80 lg:w-[410px] xl:w-[460px] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_35px_rgba(110,7,23,0.4)]"
+        className="absolute -top-3 right-0 sm:right-2 md:right-8 w-28 sm:w-60 md:w-80 lg:w-[410px] xl:w-[460px] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_35px_rgba(110,7,23,0.4)] opacity-70 sm:opacity-95"
       >
         <img
           src="/landing/rose-cluster-top.png"
@@ -45,7 +45,7 @@ export function RoseElements() {
           y: { duration: 10, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 15, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute top-[18%] sm:top-[22%] -left-8 sm:-left-6 md:-left-4 lg:left-0 w-32 sm:w-44 md:w-56 lg:w-[260px] xl:w-[290px] filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_30px_rgba(110,7,23,0.35)]"
+        className="absolute top-[18%] sm:top-[22%] -left-8 sm:-left-6 md:-left-4 lg:left-0 w-24 sm:w-44 md:w-56 lg:w-[260px] xl:w-[290px] filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_30px_rgba(110,7,23,0.35)] opacity-50 sm:opacity-92"
       >
         <img
           src="/landing/rose-cluster-left.png"
@@ -69,7 +69,7 @@ export function RoseElements() {
           y: { duration: 12, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 16, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute top-[48%] -right-4 sm:-right-2 md:right-0 w-24 sm:w-36 md:w-48 lg:w-[220px] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.3)]"
+        className="absolute top-[48%] -right-4 sm:-right-2 md:right-0 w-16 sm:w-36 md:w-48 lg:w-[220px] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.3)] opacity-60 sm:opacity-88"
       >
         <img
           src="/landing/rose-single-right.png"
@@ -91,7 +91,7 @@ export function RoseElements() {
           y: { duration: 14, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 17, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute -bottom-6 sm:-bottom-8 left-[10%] sm:left-[18%] md:left-[24%] lg:left-[28%] w-48 sm:w-64 md:w-80 lg:w-[440px] xl:w-[480px] filter drop-shadow-[0_-15px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_35px_rgba(110,7,23,0.4)]"
+        className="absolute -bottom-6 sm:-bottom-8 left-[6%] sm:left-[18%] md:left-[24%] lg:left-[28%] w-32 sm:w-64 md:w-80 lg:w-[440px] xl:w-[480px] filter drop-shadow-[0_-15px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_35px_rgba(110,7,23,0.4)] opacity-60 sm:opacity-92"
       >
         <img
           src="/landing/rose-cluster-bottom.png"

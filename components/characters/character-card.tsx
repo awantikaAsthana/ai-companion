@@ -115,7 +115,7 @@ export function CharacterCard({
       {/* Card Body & Details */}
       <div className="relative z-10 p-5 sm:p-6 flex flex-col justify-end">
         <Link href={`/app/characters/${character.id}`} className="group/title block">
-          <h3 className="font-serif text-2xl sm:text-3xl font-light text-[#F5E9E5] transition-colors duration-200 group-hover/title:text-[#C9A46A]">
+          <h3 className="font-serif text-2xl sm:text-3xl font-light text-[#F5E9E5] transition-colors duration-200 group-hover/title:text-[#C9A46A] truncate">
             {character.name}
           </h3>
         </Link>
@@ -152,7 +152,7 @@ export function CharacterCard({
         <div className="mt-5 pt-3 border-t border-[#430D15]/40 flex items-center justify-between gap-2">
           <Link
             href={`/app/characters/${character.id}`}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-[#F5E9E5] hover:text-[#C9A46A] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-[#F5E9E5] hover:text-[#C9A46A] transition-colors min-h-[38px] touch-manipulation"
           >
             <span>View Profile</span>
             <ArrowUpRight className="h-3 w-3" />
@@ -168,7 +168,7 @@ export function CharacterCard({
                     onTogglePublish(ownerChar);
                   }}
                   title={ownerChar.isPublished ? "Unpublish" : "Publish"}
-                  className="flex h-8 items-center gap-1 rounded-full border border-[#430D15]/80 bg-[#120507]/90 px-2.5 text-[11px] font-medium text-[#BFA8A8] transition-all hover:border-[#C9A46A]/50 hover:text-[#F5E9E5]"
+                  className="flex h-9 min-h-[36px] items-center gap-1 rounded-full border border-[#430D15]/80 bg-[#120507]/90 px-3 text-[11px] font-medium text-[#BFA8A8] transition-all hover:border-[#C9A46A]/50 hover:text-[#F5E9E5] touch-manipulation"
                 >
                   {ownerChar.isPublished ? (
                     <>
@@ -192,7 +192,7 @@ export function CharacterCard({
                     onEdit(ownerChar);
                   }}
                   title="Edit Character"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#430D15]/80 bg-[#120507]/90 text-[#BFA8A8] transition-all hover:border-[#C9A46A]/50 hover:text-[#F5E9E5]"
+                  className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full border border-[#430D15]/80 bg-[#120507]/90 text-[#BFA8A8] transition-all hover:border-[#C9A46A]/50 hover:text-[#F5E9E5] touch-manipulation"
                 >
                   <Edit3 className="h-3.5 w-3.5" />
                 </button>
@@ -206,7 +206,7 @@ export function CharacterCard({
                     onDelete(ownerChar.id);
                   }}
                   title="Delete Character"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-rose-950/60 bg-rose-950/30 text-rose-400 transition-all hover:border-rose-800 hover:bg-rose-900/40 hover:text-rose-200"
+                  className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full border border-rose-950/60 bg-rose-950/30 text-rose-400 transition-all hover:border-rose-800 hover:bg-rose-900/40 hover:text-rose-200 touch-manipulation"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
@@ -216,7 +216,7 @@ export function CharacterCard({
             <button
               type="button"
               onClick={() => onStartChat?.(character)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[#C9A46A]/40 bg-[#21080C]/80 px-3 py-1.5 text-[11px] font-medium text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:bg-[#6E0717]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#C9A46A]/40 bg-[#21080C]/80 px-3.5 py-1.5 min-h-[38px] text-[11px] font-medium text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A] hover:bg-[#6E0717] touch-manipulation"
             >
               <MessageSquare className="h-3 w-3 text-[#C9A46A]" />
               <span>Connect</span>

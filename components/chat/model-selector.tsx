@@ -94,7 +94,7 @@ export function ModelSelector({
         <select
           value={selectedModel}
           onChange={(e) => handleModelChange(e.target.value)}
-          className="max-w-[200px] truncate rounded border border-[#430D15] bg-[#090405] px-2 py-0.5 text-xs text-[#F5E9E5] focus:border-[#C9A46A] focus:outline-none"
+          className="max-w-[120px] sm:max-w-[200px] truncate rounded border border-[#430D15] bg-[#090405] px-2 py-0.5 text-xs text-[#F5E9E5] focus:border-[#C9A46A] focus:outline-none"
         >
           {availableModels.map((m) => (
             <option key={m.id} value={m.id}>

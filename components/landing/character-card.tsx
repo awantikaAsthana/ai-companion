@@ -16,7 +16,7 @@ export function CharacterCard({ character, featured = false }: CharacterCardProp
   return (
     <div
       className={`group relative flex flex-col justify-end overflow-hidden rounded-2xl border border-[#430D15]/50 bg-[#120507] transition-all duration-500 hover:border-[#C9A46A]/40 hover:shadow-[0_16px_50px_rgba(110,7,23,0.3)] w-full shrink-0 ${
-        featured ? "h-[500px] sm:h-[560px]" : "h-[450px] sm:h-[490px]"
+        featured ? "h-[420px] sm:h-[540px]" : "h-[380px] sm:h-[480px]"
       }`}
     >
       {/* Background portrait image with smooth cinematic zoom */}
@@ -67,11 +67,11 @@ export function CharacterCard({ character, featured = false }: CharacterCardProp
       </div>
 
       {/* Card Content & Action Area */}
-      <div className="relative z-10 p-6 sm:p-7 flex flex-col justify-end">
+      <div className="relative z-10 p-5 sm:p-7 flex flex-col justify-end">
         <div className="flex items-baseline justify-between mb-2">
           <h3
             className={`font-serif font-light text-[#F5E9E5] transition-colors duration-300 group-hover:text-[#F5E9E5] ${
-              featured ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl"
+              featured ? "text-2xl sm:text-4xl" : "text-xl sm:text-3xl"
             }`}
           >
             {character.name}
@@ -86,13 +86,13 @@ export function CharacterCard({ character, featured = false }: CharacterCardProp
           </Link>
         </div>
 
-        <p className="text-xs sm:text-sm font-light leading-relaxed text-[#BFA8A8] mb-5 line-clamp-2">
+        <p className="text-xs sm:text-sm font-light leading-relaxed text-[#BFA8A8] mb-3.5 sm:mb-5 line-clamp-2">
           {character.descriptor}
         </p>
 
         <Link
           href="/signup"
-          className="inline-flex items-center justify-center rounded-full border border-[#430D15]/80 bg-[#120507]/90 py-3 px-5 text-xs font-medium uppercase tracking-[0.16em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A]/50 hover:bg-[#6E0717]/60 hover:shadow-[0_0_20px_rgba(110,7,23,0.35)]"
+          className="inline-flex items-center justify-center rounded-full border border-[#430D15]/80 bg-[#120507]/90 py-2.5 sm:py-3 px-5 min-h-[44px] text-xs font-medium uppercase tracking-[0.16em] text-[#F5E9E5] transition-all duration-300 hover:border-[#C9A46A]/50 hover:bg-[#6E0717]/60 hover:shadow-[0_0_20px_rgba(110,7,23,0.35)] touch-manipulation"
         >
           Meet {character.name}
         </Link>

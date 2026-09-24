@@ -79,7 +79,7 @@ export function HeroCharacter({
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="relative h-[560px] sm:h-[660px] lg:h-[760px] xl:h-[820px] w-full max-w-[640px] flex items-center justify-center overflow-visible"
+        className="relative h-[340px] xs:h-[400px] sm:h-[600px] lg:h-[760px] xl:h-[820px] w-full max-w-[640px] flex items-center justify-center overflow-visible"
       >
         {!imageError ? (
           <img

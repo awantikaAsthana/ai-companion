@@ -88,7 +88,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle Navigation Menu"
-            className="sm:hidden flex h-9 w-9 items-center justify-center rounded-md border border-[#430D15]/60 bg-[#120507]/80 text-[#F5E9E5] transition-colors hover:border-[#6E0717]"
+            className="sm:hidden flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-[#430D15]/60 bg-[#120507]/90 text-[#F5E9E5] transition-colors hover:border-[#6E0717]"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5 text-[#F5E9E5]" />
@@ -109,25 +109,25 @@ export function Navbar() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="sm:hidden overflow-hidden border-b border-[#430D15]/50 bg-[#090405]/95 backdrop-blur-xl px-6 py-6"
           >
-            <nav className="flex flex-col space-y-4">
+            <nav className="flex flex-col space-y-2">
               <Link
                 href="#characters"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm uppercase tracking-[0.16em] text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+                className="flex items-center min-h-[44px] text-sm uppercase tracking-[0.16em] text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
               >
                 Discover
               </Link>
               <Link
                 href="#how-it-works"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm uppercase tracking-[0.16em] text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+                className="flex items-center min-h-[44px] text-sm uppercase tracking-[0.16em] text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
               >
                 How It Works
               </Link>
               <Link
                 href="#connection"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm uppercase tracking-[0.16em] text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
+                className="flex items-center min-h-[44px] text-sm uppercase tracking-[0.16em] text-[#BFA8A8] transition-colors hover:text-[#F5E9E5]"
               >
                 Connection
               </Link>
@@ -135,14 +135,14 @@ export function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 text-xs uppercase tracking-[0.16em] text-[#BFA8A8] border border-[#430D15]/70 rounded-full hover:text-[#F5E9E5]"
+                  className="w-full flex items-center justify-center min-h-[44px] text-xs uppercase tracking-[0.16em] text-[#BFA8A8] border border-[#430D15]/70 rounded-full hover:text-[#F5E9E5]"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 text-xs font-medium uppercase tracking-[0.14em] text-[#F5E9E5] bg-gradient-to-r from-[#6E0717] to-[#8F1025] rounded-full shadow-[0_0_15px_rgba(110,7,23,0.4)]"
+                  className="w-full flex items-center justify-center min-h-[44px] text-xs font-medium uppercase tracking-[0.14em] text-[#F5E9E5] bg-gradient-to-r from-[#6E0717] to-[#8F1025] rounded-full shadow-[0_0_15px_rgba(110,7,23,0.4)]"
                 >
                   Create Your Companion
                 </Link>

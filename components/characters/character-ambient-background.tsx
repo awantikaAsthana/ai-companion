@@ -33,7 +33,7 @@ export function CharacterAmbientBackground() {
           y: { duration: 12, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 16, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute -top-4 -right-6 sm:right-0 w-36 sm:w-52 md:w-64 lg:w-72 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.3)] opacity-60"
+        className="absolute -top-4 -right-6 sm:right-0 w-24 sm:w-52 md:w-64 lg:w-72 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.3)] opacity-40 sm:opacity-60"
       >
         <img
           src="/landing/rose-cluster-top.png"
@@ -57,7 +57,7 @@ export function CharacterAmbientBackground() {
           y: { duration: 11, repeat: Infinity, ease: "easeInOut" },
           rotate: { duration: 18, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute -bottom-6 -left-8 sm:-left-4 w-40 sm:w-56 md:w-72 lg:w-80 filter drop-shadow-[0_-15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.25)] opacity-50"
+        className="absolute -bottom-6 -left-8 sm:-left-4 w-28 sm:w-56 md:w-72 lg:w-80 filter drop-shadow-[0_-15px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_25px_rgba(110,7,23,0.25)] opacity-35 sm:opacity-50"
       >
         <img
           src="/landing/rose-cluster-bottom.png"

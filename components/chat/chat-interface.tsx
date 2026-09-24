@@ -132,13 +132,13 @@ export function ChatInterface({
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)] max-w-5xl mx-auto rounded-2xl border border-[#430D15]/50 bg-[#090405] overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-[calc(100dvh-5.5rem)] sm:h-[calc(100vh-5rem)] max-w-5xl mx-auto rounded-2xl border border-[#430D15]/50 bg-[#090405] overflow-hidden shadow-2xl">
       {/* Chat Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#430D15]/60 bg-[#120507]/90 px-4 py-3 sm:px-6 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <Link
             href="/app"
-            className="rounded-full p-1.5 text-[#BFA8A8] hover:bg-[#21080C] hover:text-[#F5E9E5] transition-colors"
+            className="rounded-full p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-[#BFA8A8] hover:bg-[#21080C] hover:text-[#F5E9E5] transition-colors touch-manipulation"
             title="Return to Sanctuary"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -149,22 +149,22 @@ export function ChatInterface({
               <img
                 src={character.avatarUrl}
                 alt={character.name}
-                className="h-9 w-9 rounded-full object-cover object-top border border-[#C9A46A]/40"
+                className="h-9 w-9 rounded-full object-cover object-top border border-[#C9A46A]/40 shrink-0"
               />
             ) : (
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#430D15] bg-[#21080C] font-serif text-sm text-[#C9A46A]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#430D15] bg-[#21080C] font-serif text-sm text-[#C9A46A] shrink-0">
                 {character?.name?.charAt(0) || "✦"}
               </div>
             )}
 
-            <div>
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <h2 className="font-serif text-base font-medium text-[#F5E9E5]">
+                <h2 className="font-serif text-base font-medium text-[#F5E9E5] truncate">
                   {character?.name || "Companion"}
                 </h2>
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
               </div>
-              <p className="text-[11px] text-[#BFA8A8] truncate max-w-xs sm:max-w-md font-light">
+              <p className="text-[11px] text-[#BFA8A8] truncate max-w-[200px] sm:max-w-md font-light">
                 {character?.description || "In conversation"}
               </p>
             </div>
@@ -199,7 +199,7 @@ export function ChatInterface({
           return (
             <div
               key={msg.id}
-              className={`flex items-start gap-3 ${
+              className={`flex items-start gap-2.5 sm:gap-3 ${
                 isUser ? "justify-end" : "justify-start"
               }`}
             >
@@ -209,10 +209,10 @@ export function ChatInterface({
                     <img
                       src={character.avatarUrl}
                       alt={character.name}
-                      className="h-8 w-8 rounded-full object-cover object-top border border-[#C9A46A]/30"
+                      className="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover object-top border border-[#C9A46A]/30"
                     />
                   ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#430D15] bg-[#21080C] font-serif text-xs text-[#C9A46A]">
+                    <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-[#430D15] bg-[#21080C] font-serif text-xs text-[#C9A46A]">
                       {character?.name?.charAt(0) || "✦"}
                     </div>
                   )}
@@ -220,7 +220,7 @@ export function ChatInterface({
               )}
 
               <div
-                className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed ${
+                className={`max-w-[88%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed ${
                   isUser
                     ? "bg-gradient-to-r from-[#21080C] to-[#6E0717]/80 text-[#F5E9E5] border border-[#C9A46A]/20"
                     : "bg-[#120507] text-[#F5E9E5] border border-[#430D15]/60"
@@ -276,7 +276,7 @@ export function ChatInterface({
           </div>
           <button
             onClick={() => setError(null)}
-            className="text-[11px] underline opacity-80 hover:opacity-100"
+            className="text-[11px] underline opacity-80 hover:opacity-100 min-h-[36px] flex items-center touch-manipulation"
           >
             Dismiss
           </button>
@@ -285,7 +285,7 @@ export function ChatInterface({
 
       {/* Bottom Observability / Model Indicator */}
       {lastMeta && (
-        <div className="px-6 py-1 bg-[#120507]/60 border-t border-[#430D15]/30 flex items-center justify-between text-[10px] text-[#BFA8A8]/60">
+        <div className="px-4 sm:px-6 py-1 bg-[#120507]/60 border-t border-[#430D15]/30 flex items-center justify-between text-[10px] text-[#BFA8A8]/60">
           <div className="flex items-center gap-2">
             <span className="text-[#C9A46A]">✦ {lastMeta.provider}</span>
             <span>·</span>
@@ -303,7 +303,7 @@ export function ChatInterface({
       {/* Bottom Message Input */}
       <form
         onSubmit={handleSendMessage}
-        className="p-3 sm:p-4 border-t border-[#430D15]/60 bg-[#120507]/90 backdrop-blur-md"
+        className="p-3 sm:p-4 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-4 border-t border-[#430D15]/60 bg-[#120507]/90 backdrop-blur-md"
       >
         <div className="relative flex items-center">
           <textarea
@@ -313,13 +313,13 @@ export function ChatInterface({
             placeholder={`Message ${character?.name || "your companion"}… (Press Enter to send)`}
             rows={1}
             disabled={sending}
-            className="w-full resize-none rounded-xl border border-[#430D15]/80 bg-[#090405] px-4 py-3 pr-12 text-xs sm:text-sm text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none disabled:opacity-50"
+            className="w-full resize-none rounded-xl border border-[#430D15]/80 bg-[#090405] px-4 py-3 pr-12 text-base sm:text-sm text-[#F5E9E5] placeholder-[#BFA8A8]/40 focus:border-[#C9A46A] focus:outline-none disabled:opacity-50 touch-manipulation"
           />
 
           <button
             type="submit"
             disabled={!input.trim() || sending}
-            className="absolute right-2 rounded-lg p-2 text-[#C9A46A] hover:bg-[#21080C] hover:text-[#F5E9E5] transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+            className="absolute right-1.5 flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-lg p-2 text-[#C9A46A] hover:bg-[#21080C] hover:text-[#F5E9E5] transition-colors disabled:opacity-30 disabled:hover:bg-transparent touch-manipulation"
             title="Send Message"
           >
             <Send className="h-4 w-4" />
