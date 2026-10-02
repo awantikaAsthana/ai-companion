@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "memory_message_limit" integer DEFAULT 20 NOT NULL;

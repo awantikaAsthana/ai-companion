@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { Sparkles, LogOut, Compass, Users } from "lucide-react";
+import { Sparkles, LogOut, Compass, Users, Settings } from "lucide-react";
 import { CharacterAmbientBackground } from "@/components/characters/character-ambient-background";
 
 interface User {
@@ -97,6 +97,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             >
               Companions
             </Link>
+            <Link
+              href="/app/settings"
+              className={`rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-wider transition-all min-h-[36px] flex items-center ${
+                pathname.startsWith("/app/settings")
+                  ? "border border-[#C9A46A]/50 bg-[#21080C] text-[#F5E9E5] shadow-[0_0_12px_rgba(201,164,106,0.15)]"
+                  : "text-[#BFA8A8] hover:text-[#F5E9E5]"
+              }`}
+            >
+              Settings
+            </Link>
           </nav>
         </div>
 
@@ -155,6 +165,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Users className="h-4 w-4" />
           <span className="text-[11px] font-medium tracking-wider uppercase">
             Companions
+          </span>
+        </Link>
+
+        <Link
+          href="/app/settings"
+          className={`flex flex-col items-center gap-1 min-h-[44px] justify-center px-4 transition-colors ${
+            pathname.startsWith("/app/settings")
+              ? "text-[#C9A46A]"
+              : "text-[#BFA8A8] hover:text-[#F5E9E5]"
+          }`}
+        >
+          <Settings className="h-4 w-4" />
+          <span className="text-[11px] font-medium tracking-wider uppercase">
+            Settings
           </span>
         </Link>
       </nav>

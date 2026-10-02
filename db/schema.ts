@@ -8,6 +8,7 @@ import {
   index,
   jsonb,
   boolean,
+  integer,
 } from "drizzle-orm/pg-core";
 
 export const characterVisibilityEnum = pgEnum("character_visibility", [
@@ -20,6 +21,7 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   name: varchar("name", { length: 100 }),
   passwordHash: varchar("password_hash", { length: 255 }),
+  memoryMessageLimit: integer("memory_message_limit").default(20).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
