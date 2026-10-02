@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { conversations, messages, characters } from "@/db/schema";
+import { conversations, messages, characters, users } from "@/db/schema";
 import { eq, and, desc, asc } from "drizzle-orm";
 import { memoryService } from "@/lib/ai/memory";
 import { buildChatContext } from "@/lib/ai/context";
@@ -307,15 +307,23 @@ export async function postMessageAndGenerateReply(
     })
     .returning();
 
-  // 4. Load memory context (L1/L2/L3)
+  // 4. Load user's memory depth setting
+  const [userSettings] = await db
+    .select({ memoryMessageLimit: users.memoryMessageLimit })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+  const l1Limit = userSettings?.memoryMessageLimit ?? 20;
+
+  // 5. Load memory context (L1/L2/L3)
   // Exclude the just-inserted user message by ID so it isn't duplicated
   // (buildChatContext will append newUserMessage separately)
   const memory = await memoryService.getMemoryContext(conversationId, {
-    l1Limit: 20,
+    l1Limit,
     excludeMessageIds: [userMsg.id],
   });
 
-  // 5. Build full prompt context
+  // 6. Build full prompt context
   const fullContextMessages = buildChatContext({
     character: {
       name: char.name,
@@ -329,7 +337,7 @@ export async function postMessageAndGenerateReply(
     newUserMessage: content,
   });
 
-  // 6. Execute AI Gateway call
+  // 7. Execute AI Gateway call
   let aiResponse;
   try {
     aiResponse = await chatGenerator({
@@ -356,7 +364,7 @@ export async function postMessageAndGenerateReply(
     };
   }
 
-  // 7. Save assistant message
+  // 8. Save assistant message
   const [assistantMsg] = await db
     .insert(messages)
     .values({
@@ -366,7 +374,7 @@ export async function postMessageAndGenerateReply(
     })
     .returning();
 
-  // 8. Update conversation timestamp
+  // 9. Update conversation timestamp
   await db
     .update(conversations)
     .set({ updatedAt: new Date() })
